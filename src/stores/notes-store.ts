@@ -13,7 +13,7 @@ export class NotesStore {
     try {
       const response = await api.getNotes();
       runInAction(() => {
-        this.notes = response.data;
+        this.notes = response.data.data;
         this.loading = false;
       });
     } catch (error) {
@@ -30,7 +30,7 @@ export class NotesStore {
     try {
       const response = await api.createNote({ title, content });
       runInAction(() => {
-        this.notes.push(response.data);
+        this.notes.push(response.data.data);
         this.loading = false;
       });
     } catch (error) {
@@ -49,7 +49,7 @@ export class NotesStore {
       runInAction(() => {
         const index = this.notes.findIndex(note => note.id === id);
         if (index !== -1) {
-          this.notes[index] = response.data;
+          this.notes[index] = response.data.data;
         }
         this.loading = false;
       });
