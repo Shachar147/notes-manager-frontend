@@ -9,7 +9,7 @@ function App() {
 
     if (store.isLoading){
         return (
-            <div className="flex-col gap-10 align-items-center">
+            <div className="loader-container">
                 <CircularProgress />
                 <span>Loading...</span>
             </div>
