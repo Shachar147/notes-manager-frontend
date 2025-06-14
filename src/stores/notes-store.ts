@@ -1,4 +1,4 @@
-import { observable, action, runInAction } from 'mobx';
+import { observable, action, runInAction, makeObservable } from 'mobx';
 import { Note } from '../types/notes';
 import { notesApiService } from '../services/notes-api.service';
 
@@ -9,7 +9,8 @@ export class NotesStore {
   @observable selectedNoteId: string | null = null;
 
   constructor() {
-    void this.fetchNotes()
+    makeObservable(this);
+    void this.fetchNotes();
   }
 
   @action
