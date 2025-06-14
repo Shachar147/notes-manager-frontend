@@ -1,16 +1,20 @@
 import React from 'react';
 import { Note } from '../../types/notes';
-import { ListItem, ListItemText, Typography } from '@mui/material';
+import { ListItem, ListItemText, Typography, IconButton } from '@mui/material';
 import styles from './note-item.module.css';
 import {observer} from "mobx-react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 interface NoteItemProps {
   note: Note;
   isSelected: boolean;
   onClick: (id: string) => void;
+  onDelete: (id: string) => void;
+  onDuplicate: (id: string) => void;
 }
 
-function NoteItem({ note, isSelected, onClick }: NoteItemProps){
+function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItemProps){
   const formattedDate = new Date(note.updatedAt).toLocaleDateString(undefined, {
     year: 'numeric',
     month: 'short',
@@ -24,6 +28,16 @@ function NoteItem({ note, isSelected, onClick }: NoteItemProps){
       selected={isSelected}
       onClick={() => onClick(note.id)}
       className={isSelected ? styles.listItemSelected : styles.listItem}
+      secondaryAction={
+        <>
+          <IconButton edge="end" aria-label="duplicate" onClick={e => { e.stopPropagation(); onDuplicate(note.id); }} size="small">
+            <FileCopyIcon fontSize="small" />
+          </IconButton>
+          <IconButton edge="end" aria-label="delete" onClick={e => { e.stopPropagation(); onDelete(note.id); }} size="small">
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </>
+      }
     >
       <ListItemText
         primary={

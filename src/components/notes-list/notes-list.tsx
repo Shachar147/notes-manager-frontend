@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
+import { observer, Observer } from 'mobx-react-lite';
 import NotesStore from '../../stores/notes-store';
 import { Virtuoso } from 'react-virtuoso';
 import NoteItem from '../note-item/note-item';
@@ -18,6 +18,13 @@ function NotesList({ store }: NoteListProps) {
             store.setSelectedNoteId(store.notes[store.notes.length - 1].id);
         }
     };
+
+    const handleDuplicateNote = async (noteId: string) => {
+        await store.duplicateNote(noteId);
+        if (store.notes.length > 0) {
+            store.setSelectedNoteId(store.notes[store.notes.length - 1].id);
+        }
+    }
 
     if (store.isLoading){
         return (
@@ -44,16 +51,19 @@ function NotesList({ store }: NoteListProps) {
                     </div>
                 ) : (
                     <Virtuoso
-                        data={store.notes}
+                        data={store.notesSorted}
                         overscan={50}
-                        itemContent={(_index, note) => (
+                        itemContent={(_index, note) => <Observer>{() => (
                             <NoteItem
                                 key={note.id}
                                 note={note}
-                                isSelected={note.id === store.selectedNoteId}
-                                onClick={() => store.setSelectedNoteId(note.id)}
+                                isSelected={note.id == store.selectedNoteId}
+                                onClick={store.setSelectedNoteId.bind(store)}
+                                onDuplicate={handleDuplicateNote}
+                                onDelete={store.deleteNote.bind(store)}
+                                selectedNoteId={store.selectedNoteId}
                             />
-                        )}
+                        )}</Observer>}
                     />
                 )}
             </div>

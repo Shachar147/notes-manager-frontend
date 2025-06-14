@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import NotesStore from './stores/notes-store';
 import NotesList from "./components/notes-list/notes-list";
 import NoteEditor from "./components/note-editor/note-editor";
-import {observer} from "mobx-react";
+import {Observer} from "mobx-react";
 
 function App() {
     const store = useMemo(() => new NotesStore(), []);
@@ -17,4 +17,4 @@ function App() {
     )
 }
 
-export default observer(App);
+export default App;

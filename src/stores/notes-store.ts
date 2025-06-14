@@ -1,4 +1,4 @@
-import { observable, action, runInAction, makeObservable } from 'mobx';
+import {observable, action, runInAction, makeObservable, computed} from 'mobx';
 import { Note } from '../types/notes';
 import { notesApiService } from '../services/notes-api.service';
 
@@ -85,8 +85,23 @@ export class NotesStore {
   }
 
   @action
+  async duplicateNote(id: string) {
+    const note = this.notes.find((n) => n.id == id);
+    const { title, content } = note;
+    await this.createNote(title, content);
+  }
+
+  @action
   setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
+  }
+
+  @computed
+  get notesSorted(){
+    return [...this.notes].sort((a, b) =>
+        new Date(b.updatedAt ?? b.createdAt).getTime() -
+        new Date(a.updatedAt ?? a.createdAt).getTime()
+    );
   }
 }
 
