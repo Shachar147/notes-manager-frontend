@@ -26,6 +26,10 @@ export class NotesStore {
         this.error = 'Failed to fetch notes';
         this.isLoading = false;
       });
+    } finally {
+      runInAction(() => {
+        this.isLoading = false;
+      })
     }
   }
 
@@ -84,7 +88,7 @@ export class NotesStore {
   }
 
   @action
-  async setSelectedNoteId(selectedNoteId: string) {
+  setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
   }
 }
