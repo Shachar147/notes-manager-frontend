@@ -86,6 +86,7 @@ export class NotesStore {
   @action
   setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
+    alert(this.selectedNoteId);
   }
 }
 

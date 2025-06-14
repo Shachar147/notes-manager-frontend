@@ -20,6 +20,11 @@ function NotesList({ store }: NoteListProps) {
         }
     };
 
+    console.log("hereee", {
+        notes: store.notes,
+        selected: store.selectedNoteId
+    });
+
     if (store.isLoading){
         return (
             <div className="loader-container">
@@ -48,9 +53,9 @@ function NotesList({ store }: NoteListProps) {
                         data={store.notes}
                         itemContent={(index, note) => (
                             <NoteItem
-                                key={note.id}
+                                key={`${note.id}-${store.selectedNoteId}`}
                                 note={note}
-                                isSelected={note.id === store.selectedNoteId}
+                                isSelected={note.id == store.selectedNoteId}
                                 onClick={() => store.setSelectedNoteId(note.id)}
                             />
                         )}

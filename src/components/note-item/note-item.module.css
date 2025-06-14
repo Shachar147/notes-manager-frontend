@@ -1,0 +1,15 @@
+.listItem {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 12px 16px;
+}
+.listItem:hover {
+    background-color: #f5f5f5;
+}
+
+.listItem.Mui-selected {
+    background-color: #ffe8a0;
+}
+
+.listItem.Mui-selected:hover {
+    background-color: #ffe8a0;
+}

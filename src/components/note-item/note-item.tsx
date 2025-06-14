@@ -1,6 +1,8 @@
 import React from 'react';
 import { Note } from '../../types/notes';
 import { ListItem, ListItemText, Typography } from '@mui/material';
+import styles from './note-item.module.css';
+import {observer} from "mobx-react";
 
 interface NoteItemProps {
   note: Note;
@@ -15,24 +17,14 @@ function NoteItem({ note, isSelected, onClick }: NoteItemProps){
     day: 'numeric',
   });
 
+  console.log("hereee", isSelected);
+
   return (
     <ListItem
       button
       selected={isSelected}
       onClick={() => onClick(note.id)}
-      sx={{
-        borderBottom: '1px solid #e0e0e0',
-        padding: '12px 16px',
-        '&.Mui-selected': {
-          backgroundColor: '#ffe8a0', // Apple Notes-like selection color
-        },
-        '&.Mui-selected:hover': {
-          backgroundColor: '#ffe8a0', // Keep color on hover
-        },
-        '&:hover': {
-          backgroundColor: '#f5f5f5', // Subtle hover effect
-        },
-      }}
+      sx={styles.listItem}
     >
       <ListItemText
         primary={
@@ -72,4 +64,4 @@ function NoteItem({ note, isSelected, onClick }: NoteItemProps){
   );
 }
 
-export default NoteItem; 
+export default observer(NoteItem);
