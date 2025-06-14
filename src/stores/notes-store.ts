@@ -26,10 +26,6 @@ export class NotesStore {
         this.error = 'Failed to fetch notes';
         this.isLoading = false;
       });
-    } finally {
-      runInAction(() => {
-        this.isLoading = false;
-      })
     }
   }
 
