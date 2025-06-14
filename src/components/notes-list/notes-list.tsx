@@ -13,8 +13,7 @@ interface NoteListProps {
 
 function NotesList({ store }: NoteListProps) {
     const handleCreateNewNote = async () => {
-        alert("here");
-        await store.createNote('', '');
+        await store.createNote('New Note', 'my new note content');
         if (store.notes.length > 0) {
             store.setSelectedNoteId(store.notes[store.notes.length - 1].id);
         }
@@ -46,11 +45,12 @@ function NotesList({ store }: NoteListProps) {
                 ) : (
                     <Virtuoso
                         data={store.notes}
-                        itemContent={(index, note) => (
+                        overscan={50}
+                        itemContent={(_index, note) => (
                             <NoteItem
-                                key={`${note.id}-${store.selectedNoteId}`}
+                                key={note.id}
                                 note={note}
-                                isSelected={note.id == store.selectedNoteId}
+                                isSelected={note.id === store.selectedNoteId}
                                 onClick={() => store.setSelectedNoteId(note.id)}
                             />
                         )}

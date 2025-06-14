@@ -31,10 +31,10 @@ export class NotesStore {
   }
 
   @action
-  async createNote(title: string, content: string) {
+  async createNote(title: string, description: string) {
     this.isLoading = true;
     try {
-      const response = await notesApiService.createNote({ title, content });
+      const response = await notesApiService.createNote({ title, description });
       runInAction(() => {
         this.notes.push(response.data.data);
         this.isLoading = false;
@@ -87,7 +87,6 @@ export class NotesStore {
   @action
   setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
-    alert(this.selectedNoteId);
   }
 }
 
