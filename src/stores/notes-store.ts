@@ -1,6 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import { Note } from '../types/notes';
-import { api } from '../services/api';
+import { notesApiService } from '../services/notes-api.service';
 
 export class NotesStore {
   @observable notes: Note[] = [];
@@ -16,7 +16,7 @@ export class NotesStore {
   async fetchNotes() {
     this.isLoading = true;
     try {
-      const response = await api.getNotes();
+      const response = await notesApiService.getNotes();
       runInAction(() => {
         this.notes = response.data.data;
         this.isLoading = false;
@@ -33,7 +33,7 @@ export class NotesStore {
   async createNote(title: string, content: string) {
     this.isLoading = true;
     try {
-      const response = await api.createNote({ title, content });
+      const response = await notesApiService.createNote({ title, content });
       runInAction(() => {
         this.notes.push(response.data.data);
         this.isLoading = false;
@@ -50,7 +50,7 @@ export class NotesStore {
   async updateNote(id: string, updates: Partial<Note>) {
     this.isLoading = true;
     try {
-      const response = await api.updateNote(id, updates);
+      const response = await notesApiService.updateNote(id, updates);
       runInAction(() => {
         const index = this.notes.findIndex(note => note.id === id);
         if (index !== -1) {
@@ -70,7 +70,7 @@ export class NotesStore {
   async deleteNote(id: string) {
     this.isLoading = true;
     try {
-      await api.deleteNote(id);
+      await notesApiService.deleteNote(id);
       runInAction(() => {
         this.notes = this.notes.filter(note => note.id !== id);
         this.isLoading = false;

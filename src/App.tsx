@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import {useMemo} from 'react';
 import NotesStore from './stores/notes-store';
-import NoteList from "./components/NoteList/NoteList";
+import NotesList from "./components/notes-list/notes-list";
 import {CircularProgress} from "@mui/material";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
     }
 
     return (
-        <NoteList store={store} />
+        <NotesList store={store} />
     )
 }
 

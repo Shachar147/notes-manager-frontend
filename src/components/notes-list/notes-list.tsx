@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import NotesStore  from '../../stores/notes-store';
 import { Virtuoso } from 'react-virtuoso';
-import NoteItem from '../NoteItem/NoteItem';
+import NoteItem from '../note-item/note-item';
 import { Box, Typography, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -10,7 +10,7 @@ interface NoteListProps {
   store: NotesStore
 }
 
-function NoteList({ store }: NoteListProps) {
+function NotesList({ store }: NoteListProps) {
   const handleCreateNewNote = async () => {
       alert("here");
     // Create a new empty note and select it
@@ -70,4 +70,4 @@ function NoteList({ store }: NoteListProps) {
   );
 }
 
-export default observer(NoteList);
+export default observer(NotesList);
