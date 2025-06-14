@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { notesStore } from './stores/notes-store';
-import NoteItem from './components/NoteList/NoteItem';
+import NoteItem from './components/NoteItem/NoteItem';
+import NoteList from "./components/NoteList/NoteList";
 
 function App() {
     const [selectedNote, setSelectedNote] = useState<string | undefined>(undefined);
@@ -24,12 +25,16 @@ function App() {
         }
 
         return (
-            <>
-                {notesStore.notes.map((note) => (
-                    <NoteItem note={note} isSelected={selectedNote == note.id} onClick={() => setSelectedNote(note.id)}/>
-                ))}
-            </>
-        );
+            <NoteList selectedNoteId={notesStore.selectedNoteId} onSelectNote={notesStore.setSelectedNoteId.bind(notesStore)} />
+        )
+
+        // return (
+        //     <>
+        //         {notesStore.notes.map((note) => (
+        //             <NoteItem note={note} isSelected={selectedNote == note.id} onClick={() => setSelectedNote(note.id)}/>
+        //         ))}
+        //     </>
+        // );
     }
 
     return (

@@ -6,6 +6,7 @@ export class NotesStore {
   @observable notes: Note[] = [];
   @observable loading = false;
   @observable error: string | null = null;
+  @observable selectedNoteId: string | null = null;
 
   @action
   async fetchNotes() {
@@ -76,6 +77,11 @@ export class NotesStore {
         this.loading = false;
       });
     }
+  }
+
+  @action
+  async setSelectedNoteId(selectedNoteId: string) {
+    this.selectedNoteId = selectedNoteId;
   }
 }
 
