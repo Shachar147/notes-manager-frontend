@@ -17,14 +17,13 @@ function NoteItem({ note, isSelected, onClick }: NoteItemProps){
     day: 'numeric',
   });
 
-  console.log("hereee", isSelected);
-
   return (
     <ListItem
+      key={isSelected}
       button
       selected={isSelected}
       onClick={() => onClick(note.id)}
-      sx={styles.listItem}
+      className={isSelected ? styles.listItemSelected : styles.listItem}
     >
       <ListItemText
         primary={
@@ -33,7 +32,7 @@ function NoteItem({ note, isSelected, onClick }: NoteItemProps){
           </Typography>
         }
         secondary={
-          <React.Fragment>
+          <>
             <Typography
               sx={{ display: 'inline' }}
               component="span"
@@ -57,7 +56,7 @@ function NoteItem({ note, isSelected, onClick }: NoteItemProps){
             >
               — {note.content.substring(0, 50) || 'No additional content'}
             </Typography>
-          </React.Fragment>
+          </>
         }
       />
     </ListItem>

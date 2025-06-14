@@ -6,10 +6,10 @@
     background-color: #f5f5f5;
 }
 
-.listItem.Mui-selected {
-    background-color: #ffe8a0;
+.listItemSelected {
+    background-color: #ffe8a0 !important;
 }
 
-.listItem.Mui-selected:hover {
-    background-color: #ffe8a0;
+.listItemSelected:hover {
+    background-color: #ffe8a0 !important;
 }

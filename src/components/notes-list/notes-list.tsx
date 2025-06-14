@@ -20,11 +20,6 @@ function NotesList({ store }: NoteListProps) {
         }
     };
 
-    console.log("hereee", {
-        notes: store.notes,
-        selected: store.selectedNoteId
-    });
-
     if (store.isLoading){
         return (
             <div className="loader-container">
