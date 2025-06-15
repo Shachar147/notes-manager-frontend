@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { auditApiService, AuditLog } from '../features/notes/services/audit-api.service';
+import AuditService from '../features/audit/services/audit.service.ts';
 
 export class AuditStore {
     logs: AuditLog[] = [];
@@ -15,7 +15,7 @@ export class AuditStore {
         this.isLoading = true;
         this.error = null;
         try {
-            const response = await auditApiService.getEntityHistory(entityType, entityId);
+            const response = await AuditService.getEntityHistory(entityType, entityId);
             runInAction(() => {
                 this.logs = response.data.data;
                 this.selectedEntityId = entityId;
@@ -33,7 +33,7 @@ export class AuditStore {
         this.isLoading = true;
         this.error = null;
         try {
-            const response = await auditApiService.getEventHistory(eventType);
+            const response = await AuditService.getEventHistory(eventType);
             runInAction(() => {
                 this.logs = response.data.data;
                 this.selectedEntityId = null;
@@ -51,7 +51,7 @@ export class AuditStore {
         this.isLoading = true;
         this.error = null;
         try {
-            const response = await auditApiService.getDateRangeHistory(startDate, endDate);
+            const response = await AuditService.getDateRangeHistory(startDate, endDate);
             runInAction(() => {
                 this.logs = response.data.data;
                 this.selectedEntityId = null;
