@@ -14,4 +14,7 @@ export const notesApiService = {
   
   deleteNote: (id: string) => 
     axios.delete(`${API_BASE_URL}/${id}`),
+
+  duplicateNote: (originalNoteId: string) =>
+    axios.post<Note>(`${API_BASE_URL}/${originalNoteId}/duplicate`, {}),
 };

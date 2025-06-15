@@ -48,6 +48,23 @@ export class NotesStore {
   }
 
   @action
+  async duplicateNote(originalNoteId: string) {
+    this.isLoading = true;
+    try {
+      const response = await notesApiService.duplicateNote(originalNoteId);
+      runInAction(() => {
+        this.notes.push(response.data.data);
+        this.isLoading = false;
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.error = 'Failed to create note';
+        this.isLoading = false;
+      });
+    }
+  }
+
+  @action
   async updateNote(id: string, updates: Partial<Note>) {
     this.isLoading = true;
     try {
@@ -82,13 +99,6 @@ export class NotesStore {
         this.isLoading = false;
       });
     }
-  }
-
-  @action
-  async duplicateNote(id: string) {
-    const note = this.notes.find((n) => n.id == id);
-    const { title, content } = note;
-    await this.createNote(title, content);
   }
 
   @action
