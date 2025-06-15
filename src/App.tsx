@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
-import NotesStore from './stores/notes-store';
-import NotesList from "./components/notes-list/notes-list";
-import NoteEditor from "./components/note-editor/note-editor";
+import NotesStore from './features/notes/stores/notes-store';
+import NotesList from "./features/notes/components/notes-list/notes-list";
+import NoteEditor from "./features/notes/components/note-editor/note-editor";
 import {Observer} from "mobx-react";
 
 function App() {
