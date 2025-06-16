@@ -3,6 +3,7 @@ import { User, LoginCredentials, RegisterCredentials, AuthResponse } from '../ty
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 interface AuthContextType {
     user: User | null;
@@ -95,20 +96,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {
-            // Verify token by making a request
-            axios.get('/auth/verify')
-                .then(response => {
-                    setUser(response.data.user);
-                })
-                .catch(() => {
+            try {
+                const decodedToken: any = jwtDecode(token);
+                // Check for token expiration
+                if (decodedToken.exp * 1000 < Date.now()) {
                     logout();
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
-        } else {
-            setLoading(false);
+                } else {
+                    setUser({ id: decodedToken.id, email: decodedToken.email }); // Assuming token has id and email
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                }
+            } catch (error) {
+                console.error("Error decoding token:", error);
+                logout();
+            }
         }
+        setLoading(false);
     }, []);
 
     return (
