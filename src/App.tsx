@@ -28,7 +28,7 @@ const NotesApp = observer(() => {
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                <div style={{ padding: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
+                <div style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ccc', backgroundColor: '#fafafa' }}>
                     <span style={{ marginRight: '1rem' }}>Welcome, {user?.email}</span>
                     <button onClick={logout}>Logout</button>
                 </div>
