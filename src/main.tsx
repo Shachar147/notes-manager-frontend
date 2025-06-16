@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { configure } from 'mobx';
-import App from './App';
+import App from './App.tsx';
 import './index.css';
+import './config/axios';
 
 // Configure MobX to enforce actions
 configure({
