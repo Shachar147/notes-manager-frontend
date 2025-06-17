@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { RegisterCredentials } from '../types/auth';
-import { Box, Paper, Typography, TextField, Button, InputAdornment } from '@mui/material';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth-context';
+import { LoginCredentials } from '../../types/auth';
+import { Box, Paper, Typography, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import styles from './Register.module.css';
+import styles from './login-page.module.css';
 
-export function Register() {
-    const [credentials, setCredentials] = useState<RegisterCredentials>({
+export function LoginPage() {
+    const [credentials, setCredentials] = useState<LoginCredentials>({
         email: '',
-        password: '',
-        confirmPassword: ''
+        password: ''
     });
     const [validationError, setValidationError] = useState<string | null>(null);
-    const { register, error, clearError } = useAuth();
+    const { login, error, clearError } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = (location.state as any)?.from?.pathname || '/';
 
     const validateEmail = (email: string): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
-    };
-
-    const validatePassword = (password: string): boolean => {
-        return password.length >= 6;
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -31,7 +29,7 @@ export function Register() {
         setValidationError(null);
         clearError();
 
-        if (!credentials.email || !credentials.password || !credentials.confirmPassword) {
+        if (!credentials.email || !credentials.password) {
             setValidationError('All fields are required');
             return;
         }
@@ -41,19 +39,9 @@ export function Register() {
             return;
         }
 
-        if (!validatePassword(credentials.password)) {
-            setValidationError('Password must be at least 6 characters long');
-            return;
-        }
-
-        if (credentials.password !== credentials.confirmPassword) {
-            setValidationError('Passwords do not match');
-            return;
-        }
-
         try {
-            await register(credentials);
-            navigate('/');
+            await login(credentials);
+            navigate('/', { replace: true });
         } catch (error) {
             // Error is handled by the auth context
         }
@@ -63,7 +51,7 @@ export function Register() {
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
                 <Typography variant="h4" align="center" gutterBottom>
-                    Create your account
+                    Sign in to your account
                 </Typography>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
@@ -98,22 +86,6 @@ export function Register() {
                             ),
                         }}
                     />
-                    <TextField
-                        label="Confirm Password"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        type="password"
-                        value={credentials.confirmPassword}
-                        onChange={e => setCredentials({ ...credentials, confirmPassword: e.target.value })}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <LockIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
                     {(validationError || error) && (
                         <Typography color="error" align="center" variant="body2">
                             {validationError || error}
@@ -126,10 +98,10 @@ export function Register() {
                         fullWidth
                         className={styles.button}
                     >
-                        Register
+                        Sign in
                     </Button>
                     <Typography align="center" variant="body2" className={styles.link}>
-                        <Link to="/login">Already have an account? Sign in</Link>
+                        <Link to="/register">Don't have an account? Register</Link>
                     </Typography>
                 </form>
             </Paper>

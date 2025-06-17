@@ -6,11 +6,12 @@ import NotesList from "./features/notes/components/notes-list/notes-list";
 import NoteEditor from "./features/notes/components/note-editor/note-editor";
 import { AuditStore } from "./features/audit/stores/audit.store";
 import AuditHistory from "./features/audit/components/audit-history/audit-history";
-import { AuthProvider } from './contexts/AuthContext';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-import { useAuth } from './contexts/AuthContext';
+import { AuthProvider } from './features/auth/contexts/auth-context';
+import { ProtectedRoute } from './common/protected-route';
+import { LoginPage } from './features/auth/components/login/login-page';
+import { RegisterPage } from './features/auth/components/register/register-page';
+import { useAuth } from './features/auth/contexts/auth-context';
+import styles from './app.module.css';
 
 const NotesApp = observer(() => {
     const store = useMemo(() => new NotesStore(), []);
@@ -26,15 +27,15 @@ const NotesApp = observer(() => {
     }, [store.selectedNoteId]);
 
     return (
-        <div style={{ display: 'flex', height: '100vh' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                <div style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ccc', backgroundColor: '#fafafa' }}>
-                    <span style={{ marginRight: '1rem' }}>Welcome, {user?.email}</span>
+        <div className={styles.appContainer}>
+            <div className={styles.mainColumn}>
+                <div className={styles.header}>
+                    <span className={styles.welcome}>Welcome, {user?.email}</span>
                     <button onClick={logout}>Logout</button>
                 </div>
-                <div style={{ display: 'flex', flex: 1 }}>
+                <div className={styles.contentRow}>
                     <NotesList store={store} />
-                    <div style={{ flex: 1, background: '#fff' }}>
+                    <div className={styles.editorContainer}>
                         <NoteEditor store={store} />
                     </div>
                     {store.selectedNoteId && (
@@ -51,8 +52,8 @@ function App() {
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
                     <Route
                         path="/"
                         element={
