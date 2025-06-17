@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { RegisterCredentials } from '../types/auth';
+import { Box, Paper, Typography, TextField, Button, InputAdornment } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import styles from './Register.module.css';
 
 export function Register() {
     const [credentials, setCredentials] = useState<RegisterCredentials>({
@@ -56,78 +60,79 @@ export function Register() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Create your account
-                    </h2>
-                </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <label htmlFor="email" className="sr-only">Email address</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Email address"
-                                value={credentials.email}
-                                onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="sr-only">Password</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Password"
-                                value={credentials.password}
-                                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="confirmPassword" className="sr-only">Confirm Password</label>
-                            <input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Confirm Password"
-                                value={credentials.confirmPassword}
-                                onChange={(e) => setCredentials({ ...credentials, confirmPassword: e.target.value })}
-                            />
-                        </div>
-                    </div>
-
+        <Box className={styles.root}>
+            <Paper elevation={6} className={styles.paper}>
+                <Typography variant="h4" align="center" gutterBottom>
+                    Create your account
+                </Typography>
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <TextField
+                        label="Email Address"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        type="email"
+                        value={credentials.email}
+                        onChange={e => setCredentials({ ...credentials, email: e.target.value })}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <TextField
+                        label="Password"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        type="password"
+                        value={credentials.password}
+                        onChange={e => setCredentials({ ...credentials, password: e.target.value })}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <LockIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <TextField
+                        label="Confirm Password"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        type="password"
+                        value={credentials.confirmPassword}
+                        onChange={e => setCredentials({ ...credentials, confirmPassword: e.target.value })}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <LockIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
                     {(validationError || error) && (
-                        <div className="text-red-500 text-sm text-center">
+                        <Typography color="error" align="center" variant="body2">
                             {validationError || error}
-                        </div>
+                        </Typography>
                     )}
-
-                    <div>
-                        <button
-                            type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Register
-                        </button>
-                    </div>
-
-                    <div className="text-sm text-center">
-                        <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-                            Already have an account? Sign in
-                        </Link>
-                    </div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        className={styles.button}
+                    >
+                        Register
+                    </Button>
+                    <Typography align="center" variant="body2" className={styles.link}>
+                        <Link to="/login">Already have an account? Sign in</Link>
+                    </Typography>
                 </form>
-            </div>
-        </div>
+            </Paper>
+        </Box>
     );
 } 

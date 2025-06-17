@@ -1,0 +1,28 @@
+.root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f6fa;
+}
+.paper {
+  padding: 32px 24px;
+  border-radius: 16px;
+  min-width: 340px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.button {
+  margin-top: 8px;
+}
+.link {
+  margin-top: 8px;
+} 

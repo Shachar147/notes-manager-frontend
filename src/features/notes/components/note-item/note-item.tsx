@@ -5,6 +5,7 @@ import styles from './note-item.module.css';
 import {observer} from "mobx-react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import Tooltip from '@mui/material/Tooltip';
 
 interface NoteItemProps {
   note: Note;
@@ -41,9 +42,11 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
     >
       <ListItemText
         primary={
-          <Typography variant="body1" fontWeight="bold">
-            {note.title || 'New Note'}
-          </Typography>
+          <Tooltip title={note.title || 'New Note'} placement="top" arrow>
+            <Typography variant="body1" fontWeight="bold" noWrap>
+              {note.title || 'New Note'}
+            </Typography>
+          </Tooltip>
         }
         secondary={
           <>
