@@ -3,12 +3,12 @@
 .container {
     width: 300px;
     display: none;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid var(--notes-gray-2);
     display: flex;
     flex-direction: column;
     height: 100vh;
     overflow-y: auto;
-    background-color: #f9f9f9;
+    background-color: var(--notes-gray-1);
 }
 
 .header {
@@ -16,14 +16,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    border-bottom: 1px solid #e0e0e0;
-    background-color: #f0f0f0;
+    border-bottom: 1px solid var(--notes-gray-2);
+    background-color: var(--notes-gray-2);
 }
 
 .emptyMessage {
     padding: 16px;
     text-align: center;
-    color: gray; /* fallback, ideally handled via theme or inline */
+    color: var(--notes-gray-5); /* fallback, ideally handled via theme or inline */
 }
 
 .list {

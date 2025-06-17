@@ -1,13 +1,13 @@
 .listItem {
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--notes-gray-2);
     padding: 12px 16px;
 }
 .listItem:hover {
-    background-color: #f5f5f5;
+    background-color: var(--notes-gray-1);
 }
 
 .listItemSelected {
-    background-color: #ffe8a0 !important;
+    background-color: #ffe8a0 !important; /* TODO: add yellow to design system */
 }
 
 .listItemSelected:hover {

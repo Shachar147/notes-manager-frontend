@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f6fa;
+  background: var(--notes-gray-1);
 }
 .paper {
   padding: 32px 24px;

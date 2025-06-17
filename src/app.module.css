@@ -13,8 +13,8 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #ccc;
-  background-color: #fafafa;
+  border-bottom: 1px solid var(--notes-gray-3);
+  background-color: var(--notes-gray-1);
 }
 
 .welcome {
@@ -28,5 +28,5 @@
 
 .editorContainer {
   flex: 1;
-  background: #fff;
+  background: var(--notes-white);
 } 
