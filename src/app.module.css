@@ -47,4 +47,18 @@
   background: var(--notes-blue-1);
   color: var(--notes-blue-6);
   text-decoration: underline;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerButton {
+  font-weight: 600;
+}
+
+.cursorPointer {
+  cursor: pointer;
 } 

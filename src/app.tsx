@@ -13,6 +13,7 @@ import { RegisterPage } from './features/auth/components/register/register-page'
 import { FoundationPage } from './pages/foundation/foundation';
 import { useAuth } from './features/auth/contexts/auth-context';
 import { Text } from './common/components';
+import Button from '@mui/material/Button';
 import styles from './app.module.css';
 
 const NotesApp = observer(() => {
@@ -33,9 +34,26 @@ const NotesApp = observer(() => {
             <div className={styles.mainColumn}>
                 <div className={styles.header}>
                     <Text className={styles.welcome}>Welcome, {user?.email}</Text>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <a href="/doc/foundation" className={styles.devDocsLink} target="_blank" rel="noopener noreferrer">Dev Docs</a>
-                        <button onClick={logout}>Logout</button>
+                    <div className={styles.headerActions}>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          component="a"
+                          href="/doc/foundation"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.headerButton}
+                        >
+                          Dev Docs
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={logout}
+                          className={styles.headerButton}
+                        >
+                          Logout
+                        </Button>
                     </div>
                 </div>
                 <div className={styles.contentRow}>
