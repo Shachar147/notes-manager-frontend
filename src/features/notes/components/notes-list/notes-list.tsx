@@ -3,9 +3,9 @@ import { observer, Observer } from 'mobx-react-lite';
 import NotesStore from '../../stores/notes-store';
 import { Virtuoso } from 'react-virtuoso';
 import NoteItem from '../note-item/note-item';
-import {IconButton, CircularProgress} from '@mui/material';
+import {IconButton} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Text } from '../../../../common/components';
+import { Text, Loader } from '../../../../common/components';
 import styles from './notes-list.module.css';
 
 interface NoteListProps {
@@ -29,10 +29,7 @@ function NotesList({ store }: NoteListProps) {
 
     if (store.isLoading){
         return (
-            <div className="loader-container">
-                <CircularProgress />
-                <Text>Loading...</Text>
-            </div>
+            <Loader />
         );
     }
 
@@ -62,6 +59,8 @@ function NotesList({ store }: NoteListProps) {
                                 onClick={store.setSelectedNoteId.bind(store)}
                                 onDuplicate={handleDuplicateNote}
                                 onDelete={store.deleteNote.bind(store)}
+                                // needed to cause re-render when selected note is changed
+                                // @ts-ignore
                                 selectedNoteId={store.selectedNoteId}
                             />
                         )}</Observer>}

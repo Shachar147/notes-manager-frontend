@@ -1,7 +1,7 @@
 import {observer, Observer} from 'mobx-react';
 import { AuditStore } from '../../stores/audit.store';
 import { AuditTopic } from '../../types/audit.types';
-import { Text } from '../../../../common/components';
+import { Text, Loader } from '../../../../common/components';
 import './audit-history.css';
 
 interface AuditHistoryProps {
@@ -32,7 +32,7 @@ function AuditHistory({ store }: AuditHistoryProps) {
         <div className="audit-history">
             <Text variant="headline-5">Edit History</Text>
             {store.isLoading ? (
-                <Text variant="body">Loading...</Text>
+                <Loader text="Loading history..." />
             ) : store.error ? (
                 <Text variant="disabled">{store.error}</Text>
             ) : store.auditLogs.length === 0 ? (
