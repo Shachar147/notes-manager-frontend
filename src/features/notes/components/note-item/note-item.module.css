@@ -7,7 +7,7 @@
 }
 
 .listItemSelected {
-    background-color: #ffe8a0 !important; /* TODO: add yellow to design system */
+    background-color: var(--notes-yellow-6) !important;
 }
 
 .listItemSelected:hover {

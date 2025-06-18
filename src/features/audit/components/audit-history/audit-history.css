@@ -23,7 +23,7 @@
     background: var(--notes-white);
     border-radius: 8px;
     padding: 15px;
-    box-shadow: 0 1px 3px rgba(24, 25, 26, 0.1); /* notes-black with opacity */
+    box-shadow: var(--notes-box-shadow-2);
 }
 
 .audit-log-header {
@@ -35,7 +35,7 @@
 
 .event-type {
     font-weight: bold;
-    color: #2c3e50; /* TODO: add to design system if needed */
+    color: var(--notes-dark-blue-4);
 }
 
 .timestamp {
@@ -50,7 +50,7 @@
 }
 
 .old-data, .new-data {
-    background: #f8f9fa; /* TODO: add to design system if needed */
+    background: var(--notes-gray-1);
     padding: 10px;
     border-radius: 4px;
 }
