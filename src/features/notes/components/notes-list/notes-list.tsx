@@ -6,12 +6,14 @@ import NoteItem from '../note-item/note-item';
 import {IconButton} from '@mui/material';
 import { Text, Loader, Icon } from '../../../../common/components';
 import styles from './notes-list.module.css';
+import { getClasses } from '../../../../utils/class-utils';
 
 interface NoteListProps {
     store: NotesStore
+    isMobile?: boolean;
 }
 
-function NotesList({ store }: NoteListProps) {
+function NotesList({ store, isMobile = false }: NoteListProps) {
     const handleCreateNewNote = async () => {
         await store.createNote('New Note', 'my new note content');
         if (store.notes.length > 0) {
@@ -33,7 +35,7 @@ function NotesList({ store }: NoteListProps) {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={getClasses(styles.container, isMobile && styles.mobileContainer)}>
             <div className={styles.header}>
                 <Text variant="headline-6">Notes</Text>
                 <IconButton color="primary" onClick={handleCreateNewNote} size="small">

@@ -15,11 +15,15 @@ import { useAuth } from './features/auth/contexts/auth-context';
 import { Text } from './common/components';
 import Button from '@mui/material/Button';
 import styles from './app.module.css';
+import SidebarDrawer from './common/components/SidebarDrawer';
+import { useState } from 'react';
+import { Icon } from './common/components';
 
 const NotesApp = observer(() => {
     const store = useMemo(() => new NotesStore(), []);
     const auditStore = useMemo(() => new AuditStore(), []);
     const { user, logout } = useAuth();
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
         if (store.selectedNoteId) {
@@ -33,36 +37,54 @@ const NotesApp = observer(() => {
         <div className={styles.appContainer}>
             <div className={styles.mainColumn}>
                 <div className={styles.header}>
+                  <div className={styles.headerLeft}>
+                    <button
+                        className={styles.hamburgerButton}
+                        onClick={() => setDrawerOpen(true)}
+                        aria-label="Open sidebar"
+                    >
+                        <Icon name="bars" size="lg" />
+                    </button>
                     <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
-                    <div className={styles.headerActions}>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          component="a"
-                          href="/doc/foundation"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Dev Docs
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={logout}
-                          className={styles.headerButton}
-                        >
-                          Logout
-                        </Button>
-                    </div>
+                  </div>
+                  <div className={styles.headerRight}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      component="a"
+                      href="/doc/foundation"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Dev Docs
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={logout}
+                      className={styles.headerButton}
+                    >
+                      Logout
+                    </Button>
+                  </div>
                 </div>
+                <SidebarDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                  <NotesList store={store} isMobile />
+                </SidebarDrawer>
                 <div className={styles.contentRow}>
-                    <NotesList store={store} />
-                    <div className={styles.editorContainer}>
-                        <NoteEditor store={store} />
+                    <div className={styles.desktopSidebar}>
+                      <NotesList store={store} />
                     </div>
-                    {store.selectedNoteId && (
-                        <AuditHistory store={auditStore} />
-                    )}
+                    <div className={styles.mainContentWrapper}>
+                      <div className={styles.editorContainer}>
+                          <NoteEditor store={store} />
+                      </div>
+                      {store.selectedNoteId && (
+                          <div className={styles.mobileAuditHistoryWrapper}>
+                            <AuditHistory store={auditStore} />
+                          </div>
+                      )}
+                    </div>
                 </div>
             </div>
         </div>

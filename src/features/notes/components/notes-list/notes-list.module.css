@@ -11,6 +11,10 @@
     background-color: var(--notes-gray-1);
 }
 
+.mobileContainer {
+    width: 100%;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
