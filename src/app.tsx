@@ -12,7 +12,6 @@ import { LoginPage } from './features/auth/components/login/login-page';
 import { RegisterPage } from './features/auth/components/register/register-page';
 import { FoundationPage } from './pages/foundation/foundation';
 import { useAuth } from './features/auth/contexts/auth-context';
-import { Text } from './common/components';
 import Button from '@mui/material/Button';
 import styles from './app.module.css';
 import SidebarDrawer from './common/components/SidebarDrawer';
