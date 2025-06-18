@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Note } from '../../types/notes';
 import { TextField, Button, Box } from '@mui/material';
 import NotesStore from '../../stores/notes-store';
 import { Text } from '../../../../common/components';
@@ -24,6 +23,7 @@ function NoteEditor({ store }: NoteEditorProps) {
   const handleSave = async () => {
     if (selectedNote && dirty) {
       await store.updateNote(selectedNote.id, { title, content });
+      await store.
       setDirty(false);
     }
   };

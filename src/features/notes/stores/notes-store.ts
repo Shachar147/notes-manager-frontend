@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { notesApiService } from '../services/notes-api.service';
 import { Note } from '../types/notes';
+import {AuditStore} from "../../audit/stores/audit.store";
 
 export class NotesStore {
   @observable notes: Note[] = [];
@@ -8,9 +9,11 @@ export class NotesStore {
   @observable isLoading = false;
   @observable error: string | null = null;
   @observable selectedNoteId: string | null = null;
+  auditStore: AuditStore;
 
-  constructor() {
+  constructor(auditStore: AuditStore) {
     makeObservable(this);
+    this.auditStore = auditStore;
     void this.fetchNotes();
   }
 
@@ -86,6 +89,8 @@ export class NotesStore {
         this.isLoading = false;
       });
     }
+
+    void this.auditStore.fetchEntityHistory('note', this.selectedNoteId!);
   }
 
   @action
@@ -98,6 +103,12 @@ export class NotesStore {
         this.totalNotes -= 1;
         this.isLoading = false;
       });
+
+      if (this.selectedNoteId === id) {
+        this.selectedNoteId = null;
+        void this.auditStore.clearHistory();
+      }
+
     } catch (error) {
       runInAction(() => {
         this.error = 'Failed to delete note';
@@ -109,6 +120,7 @@ export class NotesStore {
   @action
   setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
+    void this.auditStore.fetchEntityHistory('note', this.selectedNoteId);
   }
 
   @computed

@@ -19,18 +19,9 @@ import { useState } from 'react';
 import { Icon } from './common/components';
 
 const NotesApp = observer(() => {
-    const store = useMemo(() => new NotesStore(), []);
-    const auditStore = useMemo(() => new AuditStore(), []);
+    const store = useMemo(() => new NotesStore(new AuditStore()), []);
     const { user, logout } = useAuth();
     const [drawerOpen, setDrawerOpen] = useState(false);
-
-    useEffect(() => {
-        if (store.selectedNoteId) {
-            void auditStore.fetchEntityHistory('note', store.selectedNoteId);
-        } else {
-            auditStore.clearHistory();
-        }
-    }, [store.selectedNoteId]);
 
     return (
         <div className={styles.appContainer}>
@@ -80,7 +71,7 @@ const NotesApp = observer(() => {
                       </div>
                       {store.selectedNoteId && (
                           <div className={styles.mobileAuditHistoryWrapper}>
-                            <AuditHistory store={auditStore} />
+                            <AuditHistory store={store.auditStore} />
                           </div>
                       )}
                     </div>
