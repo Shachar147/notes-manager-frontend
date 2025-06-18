@@ -55,10 +55,13 @@
   gap: 1rem;
 }
 
-.headerButton {
-  font-weight: 600;
-}
-
 .cursorPointer {
   cursor: pointer;
+}
+
+.logo {
+  max-height: 45px;
+  width: auto;
+  display: block;
+  user-select: none;
 } 

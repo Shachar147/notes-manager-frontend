@@ -33,7 +33,7 @@ const NotesApp = observer(() => {
         <div className={styles.appContainer}>
             <div className={styles.mainColumn}>
                 <div className={styles.header}>
-                    <Text className={styles.welcome}>Welcome, {user?.email}</Text>
+                    <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
                     <div className={styles.headerActions}>
                         <Button
                           variant="outlined"
@@ -42,7 +42,6 @@ const NotesApp = observer(() => {
                           href="/doc/foundation"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={styles.headerButton}
                         >
                           Dev Docs
                         </Button>
