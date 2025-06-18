@@ -49,6 +49,7 @@ export function LoginPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
+                <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
                 <Text variant="headline-4" className={styles.signInTitle}>
                     Sign in to your account
                 </Text>
