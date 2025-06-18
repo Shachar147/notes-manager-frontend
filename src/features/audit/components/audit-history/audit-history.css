@@ -1,16 +1,19 @@
 .audit-history {
     width: 300px;
     height: 100%;
-    background: #f5f5f5;
-    border-left: 1px solid #ddd;
+    background: var(--notes-gray-1);
+    border-left: 1px solid var(--notes-gray-3);
     padding: 20px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .audit-history h2 {
     margin: 0 0 20px 0;
     font-size: 1.2em;
-    color: #333;
+    color: var(--notes-gray-6);
 }
 
 .audit-logs {
@@ -20,10 +23,10 @@
 }
 
 .audit-log {
-    background: white;
+    background: var(--notes-white);
     border-radius: 8px;
     padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--notes-box-shadow-2);
 }
 
 .audit-log-header {
@@ -35,12 +38,12 @@
 
 .event-type {
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--notes-dark-blue-4);
 }
 
 .timestamp {
     font-size: 0.8em;
-    color: #666;
+    color: var(--notes-gray-5);
 }
 
 .changes {
@@ -50,7 +53,7 @@
 }
 
 .old-data, .new-data {
-    background: #f8f9fa;
+    background: var(--notes-gray-1);
     padding: 10px;
     border-radius: 4px;
 }
@@ -58,7 +61,7 @@
 .old-data h4, .new-data h4 {
     margin: 0 0 5px 0;
     font-size: 0.9em;
-    color: #666;
+    color: var(--notes-gray-5);
 }
 
 .old-data pre, .new-data pre {
@@ -71,9 +74,9 @@
 .loading, .error, .no-history {
     text-align: center;
     padding: 20px;
-    color: #666;
+    color: var(--notes-gray-5);
 }
 
 .error {
-    color: #dc3545;
+    color: var(--notes-red-5);
 } 

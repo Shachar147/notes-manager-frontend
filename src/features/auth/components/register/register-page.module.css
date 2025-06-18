@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f6fa;
+  background: var(--notes-gray-1);
 }
 .paper {
   padding: 32px 24px;
@@ -25,4 +25,27 @@
 }
 .link {
   margin-top: 8px;
-} 
+}
+.registerTitle {
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.loginLink {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+}
+.error {
+  color: var(--notes-red-5);
+  text-align: center;
+  display: block;
+}
+.logo {
+  max-height: 70px;
+  width: auto;
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  margin-bottom: 0;
+  user-select: none;
+}

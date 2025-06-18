@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
 import { LoginCredentials } from '../../types/auth';
-import { Box, Paper, Typography, TextField, Button, InputAdornment, IconButton } from '@mui/material';
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
+import { Box, Paper, TextField, Button, InputAdornment } from '@mui/material';
+import { Text, Icon } from '../../../../common/components';
 import styles from './login-page.module.css';
 
 export function LoginPage() {
@@ -50,9 +49,10 @@ export function LoginPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
-                <Typography variant="h4" align="center" gutterBottom>
+                <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
+                <Text variant="headline-4" className={styles.signInTitle}>
                     Sign in to your account
-                </Typography>
+                </Text>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
                         label="Email Address"
@@ -65,7 +65,7 @@ export function LoginPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <EmailIcon />
+                                    <Icon name="envelope" />
                                 </InputAdornment>
                             ),
                         }}
@@ -81,15 +81,15 @@ export function LoginPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <LockIcon />
+                                    <Icon name="lock" />
                                 </InputAdornment>
                             ),
                         }}
                     />
                     {(validationError || error) && (
-                        <Typography color="error" align="center" variant="body2">
+                        <Text variant="body" className={styles.error}>
                             {validationError || error}
-                        </Typography>
+                        </Text>
                     )}
                     <Button
                         type="submit"
@@ -100,9 +100,9 @@ export function LoginPage() {
                     >
                         Sign in
                     </Button>
-                    <Typography align="center" variant="body2" className={styles.link}>
+                    <Text variant="body" className={styles.registerLink}>
                         <Link to="/register">Don't have an account? Register</Link>
-                    </Typography>
+                    </Text>
                 </form>
             </Paper>
         </Box>

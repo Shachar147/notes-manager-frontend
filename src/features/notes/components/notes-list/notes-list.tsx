@@ -3,15 +3,17 @@ import { observer, Observer } from 'mobx-react-lite';
 import NotesStore from '../../stores/notes-store';
 import { Virtuoso } from 'react-virtuoso';
 import NoteItem from '../note-item/note-item';
-import {Typography, IconButton, CircularProgress} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import {IconButton} from '@mui/material';
+import { Text, Loader, Icon } from '../../../../common/components';
 import styles from './notes-list.module.css';
+import { getClasses } from '../../../../utils/class-utils';
 
 interface NoteListProps {
     store: NotesStore
+    isMobile?: boolean;
 }
 
-function NotesList({ store }: NoteListProps) {
+function NotesList({ store, isMobile = false }: NoteListProps) {
     const handleCreateNewNote = async () => {
         await store.createNote('New Note', 'my new note content');
         if (store.notes.length > 0) {
@@ -28,26 +30,23 @@ function NotesList({ store }: NoteListProps) {
 
     if (store.isLoading){
         return (
-            <div className="loader-container">
-                <CircularProgress />
-                <span>Loading...</span>
-            </div>
+            <Loader />
         );
     }
 
     return (
-        <div className={styles.container}>
+        <div className={getClasses(styles.container, isMobile && styles.mobileContainer)}>
             <div className={styles.header}>
-                <Typography variant="h6" fontWeight="bold">Notes</Typography>
+                <Text variant="headline-6">Notes</Text>
                 <IconButton color="primary" onClick={handleCreateNewNote} size="small">
-                    <AddIcon />
+                    <Icon name="plus" size="small" />
                 </IconButton>
             </div>
 
             <div className={styles.list}>
                 {store.notes.length === 0 ? (
                     <div className={styles.emptyMessage}>
-                        <Typography>No notes yet. Click '+' to create one!</Typography>
+                        <Text variant="body">No notes yet. Click '+' to create one!</Text>
                     </div>
                 ) : (
                     <Virtuoso
@@ -61,6 +60,8 @@ function NotesList({ store }: NoteListProps) {
                                 onClick={store.setSelectedNoteId.bind(store)}
                                 onDuplicate={handleDuplicateNote}
                                 onDelete={store.deleteNote.bind(store)}
+                                // needed to cause re-render when selected note is changed
+                                // @ts-ignore
                                 selectedNoteId={store.selectedNoteId}
                             />
                         )}</Observer>}

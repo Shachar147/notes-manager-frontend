@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
 import { RegisterCredentials } from '../../types/auth';
-import { Box, Paper, Typography, TextField, Button, InputAdornment } from '@mui/material';
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
+import { Box, Paper, TextField, Button, InputAdornment } from '@mui/material';
+import { Text, Icon } from '../../../../common/components';
 import styles from './register-page.module.css';
 
 export function RegisterPage() {
@@ -42,7 +41,7 @@ export function RegisterPage() {
         }
 
         if (!validatePassword(credentials.password)) {
-            setValidationError('Password must be at least 6 characters long');
+            setValidationError('Password must be at least 6 characters');
             return;
         }
 
@@ -53,7 +52,7 @@ export function RegisterPage() {
 
         try {
             await register(credentials);
-            navigate('/');
+            navigate('/', { replace: true });
         } catch (error) {
             // Error is handled by the auth context
         }
@@ -62,9 +61,10 @@ export function RegisterPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
-                <Typography variant="h4" align="center" gutterBottom>
+                <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
+                <Text variant="headline-4" className={styles.registerTitle}>
                     Create your account
-                </Typography>
+                </Text>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
                         label="Email Address"
@@ -77,7 +77,7 @@ export function RegisterPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <EmailIcon />
+                                    <Icon name="envelope" />
                                 </InputAdornment>
                             ),
                         }}
@@ -93,7 +93,7 @@ export function RegisterPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <LockIcon />
+                                    <Icon name="lock" />
                                 </InputAdornment>
                             ),
                         }}
@@ -109,15 +109,15 @@ export function RegisterPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <LockIcon />
+                                    <Icon name="lock" />
                                 </InputAdornment>
                             ),
                         }}
                     />
                     {(validationError || error) && (
-                        <Typography color="error" align="center" variant="body2">
+                        <Text variant="body" className={styles.error}>
                             {validationError || error}
-                        </Typography>
+                        </Text>
                     )}
                     <Button
                         type="submit"
@@ -128,9 +128,9 @@ export function RegisterPage() {
                     >
                         Register
                     </Button>
-                    <Typography align="center" variant="body2" className={styles.link}>
+                    <Text variant="body" className={styles.loginLink}>
                         <Link to="/login">Already have an account? Sign in</Link>
-                    </Typography>
+                    </Text>
                 </form>
             </Paper>
         </Box>

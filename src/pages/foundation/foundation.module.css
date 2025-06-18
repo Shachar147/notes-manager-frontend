@@ -1,0 +1,251 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pageTitle {
+  margin-bottom: 2rem;
+  color: var(--notes-black);
+  font-weight: 700;
+  /* text-transform: uppercase; */
+}
+
+.section {
+  margin-bottom: 3rem;
+  padding: 2rem;
+}
+
+.sectionTitle {
+  margin-bottom: 0.5rem;
+  color: var(--notes-black);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+  /* text-transform: uppercase; */
+}
+
+.sectionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.divider {
+  margin-bottom: 1.5rem;
+}
+
+/* Typography Styles */
+.typographyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .typographyGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.typographyItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--notes-gray-2);
+  border-radius: 8px;
+  background-color: var(--notes-gray-1);
+}
+
+.typographyLabel {
+  color: var(--notes-gray-5);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+/* Color Palette Styles */
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.colorPalette {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paletteName {
+  font-weight: 600;
+  color: var(--notes-black);
+}
+
+.colorSwatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.colorSwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.colorBox {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  border: 2px solid var(--notes-gray-2);
+  box-shadow: var(--notes-box-shadow-2);
+}
+
+.colorName {
+  font-size: 0.75rem;
+  color: var(--notes-gray-5);
+  text-align: center;
+}
+
+/* Icon Styles */
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.iconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--notes-gray-2);
+  border-radius: 8px;
+  background-color: var(--notes-white);
+  transition: all 0.2s ease;
+}
+
+.iconItem:hover {
+  border-color: var(--notes-blue-4);
+  box-shadow: var(--notes-box-shadow-3);
+  transform: translateY(-2px);
+}
+
+.iconName {
+  font-weight: 600;
+  color: var(--notes-black);
+  text-align: center;
+}
+
+.iconCategory {
+  color: var(--notes-gray-5);
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+/* Icon Sizes Styles */
+.iconSizesGrid {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.iconSizeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--notes-gray-2);
+  border-radius: 8px;
+  background-color: var(--notes-white);
+}
+
+/* Icon Colors Styles */
+.iconColorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.iconColorItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--notes-gray-2);
+  border-radius: 8px;
+  background-color: var(--notes-white);
+  transition: all 0.2s ease;
+}
+
+.iconColorItem:hover {
+  border-color: var(--notes-blue-4);
+  box-shadow: var(--notes-box-shadow-3);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .section {
+    padding: 1rem;
+  }
+  
+  .colorGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .iconGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  
+  .iconSizesGrid {
+    gap: 1rem;
+  }
+  
+  .iconColorsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+
+.iconSearchInput {
+  width: 97%;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--notes-gray-3);
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.iconSearchInput:focus {
+  border-color: var(--notes-blue-4);
+}
+
+.copiedFeedback {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--notes-blue-1);
+  color: var(--notes-blue-6);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  box-shadow: var(--notes-box-shadow-2);
+  pointer-events: none;
+  z-index: 2;
+} 

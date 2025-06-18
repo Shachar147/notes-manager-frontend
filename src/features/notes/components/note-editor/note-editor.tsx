@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Note } from '../../types/notes';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box } from '@mui/material';
 import NotesStore from '../../stores/notes-store';
+import { Text } from '../../../../common/components';
 
 interface NoteEditorProps {
   store: NotesStore;
@@ -34,7 +35,7 @@ function NoteEditor({ store }: NoteEditorProps) {
   if (!selectedNote) {
     return (
       <Box p={4}>
-        <Typography variant="h6" color="text.secondary">Select a note to view and edit</Typography>
+        <Text variant="headline-6">Select a note to view and edit</Text>
       </Box>
     );
   }
