@@ -1,7 +1,7 @@
 import React from 'react';
 import Text from '../text/text';
 import styles from './loader.module.css';
-import Icon from '../icon';
+import Icon from '../icon/icon';
 
 interface LoaderProps {
   text?: string;

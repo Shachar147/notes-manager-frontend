@@ -1,6 +1,6 @@
 import React from 'react';
-import { getClasses } from '../../utils/class-utils';
-import type { TextColor } from './text/text';
+import { getClasses } from '../../../utils/class-utils';
+import type { TextColor } from '../text/text';
 import type { FontAwesomeIconName } from './font-awesome-names';
 
 interface IconProps {

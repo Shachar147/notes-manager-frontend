@@ -10,6 +10,7 @@ import { AuthProvider } from './features/auth/contexts/auth-context';
 import { ProtectedRoute } from './common/protected-route';
 import { LoginPage } from './features/auth/components/login/login-page';
 import { RegisterPage } from './features/auth/components/register/register-page';
+import { FoundationPage } from './pages/foundation/foundation';
 import { useAuth } from './features/auth/contexts/auth-context';
 import { Text } from './common/components';
 import styles from './app.module.css';
@@ -60,6 +61,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <NotesApp />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/doc/foundation"
+                        element={
+                            <ProtectedRoute>
+                                <FoundationPage />
                             </ProtectedRoute>
                         }
                     />
