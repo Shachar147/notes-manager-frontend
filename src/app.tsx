@@ -33,7 +33,10 @@ const NotesApp = observer(() => {
             <div className={styles.mainColumn}>
                 <div className={styles.header}>
                     <Text className={styles.welcome}>Welcome, {user?.email}</Text>
-                    <button onClick={logout}>Logout</button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <a href="/doc/foundation" className={styles.devDocsLink} target="_blank" rel="noopener noreferrer">Dev Docs</a>
+                        <button onClick={logout}>Logout</button>
+                    </div>
                 </div>
                 <div className={styles.contentRow}>
                     <NotesList store={store} />

@@ -92,10 +92,10 @@
   --notes-headline-5-size: 1.25rem;
   --notes-headline-6-size: 1rem;
   --notes-body-size: 1rem;
-  --notes-subhead-size: 0.95rem;
+  --notes-subhead-size: 0.85rem;
   --notes-caption-size: 0.875rem;
   --notes-secondary-size: 1rem;
-  --notes-disabled-size: 1rem;
+  --notes-disabled-size: 0.95rem;
   --notes-headline-weight: 700;
   --notes-body-weight: 400;
   --notes-secondary-weight: 400;
@@ -103,9 +103,9 @@
   --notes-caption-weight: 400;
   --notes-disabled-weight: 400;
   --notes-secondary-color: var(--notes-gray-5);
-  --notes-subhead-color: var(--notes-gray-4);
+  --notes-subhead-color: var(--notes-gray-6);
   --notes-caption-color: var(--notes-gray-5);
-  --notes-disabled-color: var(--notes-gray-6);
+  --notes-disabled-color: var(--notes-gray-4);
 }
 
 .notes-headline-1 {
