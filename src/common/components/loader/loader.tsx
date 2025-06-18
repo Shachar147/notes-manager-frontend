@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircularProgress } from '@mui/material';
-import Text from './text';
+import Text from '../text/text';
 import styles from './loader.module.css';
 
 interface LoaderProps {

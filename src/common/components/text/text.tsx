@@ -1,5 +1,5 @@
 import React from 'react';
-import { getClasses } from '../../utils/class-utils';
+import { getClasses } from '../../../utils/class-utils';
 
 export type TextVariant = 
   | 'body' 
