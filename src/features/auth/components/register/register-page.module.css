@@ -25,4 +25,19 @@
 }
 .link {
   margin-top: 8px;
-} 
+}
+.registerTitle {
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.loginLink {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+}
+.error {
+  color: var(--notes-red-5);
+  text-align: center;
+  display: block;
+}

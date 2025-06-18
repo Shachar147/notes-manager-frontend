@@ -29,29 +29,29 @@ const getEventTypeLabel = (eventType: AuditTopic) => {
 function AuditHistory({ store }: AuditHistoryProps) {
     return (
         <div className="audit-history">
-            <h2>Edit History</h2>
+            <span className="notes-headline-5">Edit History</span>
             {store.isLoading ? (
-                <div className="loading">Loading...</div>
+                <div className="notes-body">Loading...</div>
             ) : store.error ? (
-                <div className="error">{store.error}</div>
+                <div className="notes-disabled">{store.error}</div>
             ) : store.auditLogs.length === 0 ? (
-                <div className="no-history">No history available</div>
+                <div className="notes-body">No history available</div>
             ) : (
                 <div className="audit-logs">
                     {store.auditLogs.map((log) => (
                         <div key={log.id} className="audit-log">
                             <div className="audit-log-header">
-                                <span className="event-type">{getEventTypeLabel(log.eventType)}</span>
-                                <span className="timestamp">{formatDate(log.createdAt)}</span>
+                                <span className="notes-headline-6 event-type">{getEventTypeLabel(log.eventType)}</span>
+                                <span className="notes-subhead timestamp">{formatDate(log.createdAt)}</span>
                             </div>
                             {log.oldData && (
                                 <div className="changes">
                                     <div className="old-data">
-                                        <h4>Previous</h4>
+                                        <span className="notes-subhead">Previous</span>
                                         <pre>{JSON.stringify(log.oldData, null, 2)}</pre>
                                     </div>
                                     <div className="new-data">
-                                        <h4>New</h4>
+                                        <span className="notes-subhead">New</span>
                                         <pre>{JSON.stringify(log.newData, null, 2)}</pre>
                                     </div>
                                 </div>

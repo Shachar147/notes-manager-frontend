@@ -6,6 +6,7 @@ import {observer} from "mobx-react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Tooltip from '@mui/material/Tooltip';
+import {getClasses} from "../../../../utils/class-utils";
 
 interface NoteItemProps {
   note: Note;
@@ -43,36 +44,21 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
       <ListItemText
         primary={
           <Tooltip title={note.title || 'New Note'} placement="top" arrow>
-            <Typography variant="body1" fontWeight="bold" noWrap>
+            <span className={getClasses('notes-headline-6', styles.newNoteTitle)}>
               {note.title || 'New Note'}
-            </Typography>
+            </span>
           </Tooltip>
         }
         secondary={
           <>
-            <Typography
-              sx={{ display: 'inline' }}
-              component="span"
-              variant="body2"
-              color="text.secondary"
-            >
+            <span className="notes-secondary">
               {formattedDate}
-            </Typography>
-            <Typography
-              sx={{
-                display: 'inline',
-                ml: 1,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                maxWidth: '80%', // Adjust as needed
-              }}
-              component="span"
-              variant="body2"
-              color="text.primary"
+            </span>
+            <span
+              className={getClasses('notes-body', styles.noteContent)}
             >
               — {note.content.substring(0, 50) || 'No additional content'}
-            </Typography>
+            </span>
           </>
         }
       />

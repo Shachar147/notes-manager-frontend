@@ -6,6 +6,7 @@ import { Box, Paper, Typography, TextField, Button, InputAdornment } from '@mui/
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import styles from './register-page.module.css';
+import {getClasses} from "../../../../utils/class-utils";
 
 export function RegisterPage() {
     const [credentials, setCredentials] = useState<RegisterCredentials>({
@@ -62,9 +63,9 @@ export function RegisterPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
-                <Typography variant="h4" align="center" gutterBottom>
+                <span className={getClasses('notes-headline-4', styles.registerTitle)}>
                     Create your account
-                </Typography>
+                </span>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
                         label="Email Address"
@@ -115,9 +116,9 @@ export function RegisterPage() {
                         }}
                     />
                     {(validationError || error) && (
-                        <Typography color="error" align="center" variant="body2">
+                        <span className={getClasses('notes-body', styles.error)}>
                             {validationError || error}
-                        </Typography>
+                        </span>
                     )}
                     <Button
                         type="submit"
@@ -128,9 +129,9 @@ export function RegisterPage() {
                     >
                         Register
                     </Button>
-                    <Typography align="center" variant="body2" className={styles.link}>
+                    <span className={getClasses('notes-body', styles.loginLink)}>
                         <Link to="/login">Already have an account? Sign in</Link>
-                    </Typography>
+                    </span>
                 </form>
             </Paper>
         </Box>

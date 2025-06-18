@@ -6,6 +6,22 @@
     background-color: var(--notes-gray-1);
 }
 
+.newNoteTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.noteContent {
+    display: inline;
+    margin-left: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+}
+
 .listItemSelected {
     background-color: var(--notes-yellow-6) !important;
 }
