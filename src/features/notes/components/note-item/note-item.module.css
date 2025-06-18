@@ -23,9 +23,5 @@
 }
 
 .listItemSelected {
-    background-color: var(--notes-yellow-6) !important;
-}
-
-.listItemSelected:hover {
-    background-color: #ffe8a0 !important;
+    background-color: var(--notes-blue-1) !important;
 }
