@@ -5,6 +5,7 @@ import { RegisterCredentials } from '../../types/auth';
 import { Box, Paper, Typography, TextField, Button, InputAdornment } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import { Text } from '../../../../common/components';
 import styles from './register-page.module.css';
 import {getClasses} from "../../../../utils/class-utils";
 
@@ -63,9 +64,9 @@ export function RegisterPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
-                <span className={getClasses('notes-headline-4', styles.registerTitle)}>
+                <Text variant="headline-4" className={styles.registerTitle}>
                     Create your account
-                </span>
+                </Text>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
                         label="Email Address"
@@ -116,9 +117,9 @@ export function RegisterPage() {
                         }}
                     />
                     {(validationError || error) && (
-                        <span className={getClasses('notes-body', styles.error)}>
+                        <Text variant="body" className={styles.error}>
                             {validationError || error}
-                        </span>
+                        </Text>
                     )}
                     <Button
                         type="submit"
@@ -129,9 +130,9 @@ export function RegisterPage() {
                     >
                         Register
                     </Button>
-                    <span className={getClasses('notes-body', styles.loginLink)}>
+                    <Text variant="body" className={styles.loginLink}>
                         <Link to="/login">Already have an account? Sign in</Link>
-                    </span>
+                    </Text>
                 </form>
             </Paper>
         </Box>

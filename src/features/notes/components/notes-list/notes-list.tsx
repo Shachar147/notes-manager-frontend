@@ -5,6 +5,7 @@ import { Virtuoso } from 'react-virtuoso';
 import NoteItem from '../note-item/note-item';
 import {IconButton, CircularProgress} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Text } from '../../../../common/components';
 import styles from './notes-list.module.css';
 
 interface NoteListProps {
@@ -30,7 +31,7 @@ function NotesList({ store }: NoteListProps) {
         return (
             <div className="loader-container">
                 <CircularProgress />
-                <span>Loading...</span>
+                <Text>Loading...</Text>
             </div>
         );
     }
@@ -38,7 +39,7 @@ function NotesList({ store }: NoteListProps) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <span className="notes-headline-6">Notes</span>
+                <Text variant="headline-6">Notes</Text>
                 <IconButton color="primary" onClick={handleCreateNewNote} size="small">
                     <AddIcon />
                 </IconButton>
@@ -47,7 +48,7 @@ function NotesList({ store }: NoteListProps) {
             <div className={styles.list}>
                 {store.notes.length === 0 ? (
                     <div className={styles.emptyMessage}>
-                        <span className="notes-body">No notes yet. Click '+' to create one!</span>
+                        <Text variant="body">No notes yet. Click '+' to create one!</Text>
                     </div>
                 ) : (
                     <Virtuoso

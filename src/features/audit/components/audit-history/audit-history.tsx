@@ -1,6 +1,7 @@
 import {observer, Observer} from 'mobx-react';
 import { AuditStore } from '../../stores/audit.store';
 import { AuditTopic } from '../../types/audit.types';
+import { Text } from '../../../../common/components';
 import './audit-history.css';
 
 interface AuditHistoryProps {
@@ -29,29 +30,29 @@ const getEventTypeLabel = (eventType: AuditTopic) => {
 function AuditHistory({ store }: AuditHistoryProps) {
     return (
         <div className="audit-history">
-            <span className="notes-headline-5">Edit History</span>
+            <Text variant="headline-5">Edit History</Text>
             {store.isLoading ? (
-                <div className="notes-body">Loading...</div>
+                <Text variant="body">Loading...</Text>
             ) : store.error ? (
-                <div className="notes-disabled">{store.error}</div>
+                <Text variant="disabled">{store.error}</Text>
             ) : store.auditLogs.length === 0 ? (
-                <div className="notes-body">No history available</div>
+                <Text variant="body">No history available</Text>
             ) : (
                 <div className="audit-logs">
                     {store.auditLogs.map((log) => (
                         <div key={log.id} className="audit-log">
                             <div className="audit-log-header">
-                                <span className="notes-headline-6 event-type">{getEventTypeLabel(log.eventType)}</span>
-                                <span className="notes-subhead timestamp">{formatDate(log.createdAt)}</span>
+                                <Text variant="headline-6" className="event-type">{getEventTypeLabel(log.eventType)}</Text>
+                                <Text variant="subhead" className="timestamp">{formatDate(log.createdAt)}</Text>
                             </div>
                             {log.oldData && (
                                 <div className="changes">
                                     <div className="old-data">
-                                        <span className="notes-subhead">Previous</span>
+                                        <Text variant="subhead">Previous</Text>
                                         <pre>{JSON.stringify(log.oldData, null, 2)}</pre>
                                     </div>
                                     <div className="new-data">
-                                        <span className="notes-subhead">New</span>
+                                        <Text variant="subhead">New</Text>
                                         <pre>{JSON.stringify(log.newData, null, 2)}</pre>
                                     </div>
                                 </div>

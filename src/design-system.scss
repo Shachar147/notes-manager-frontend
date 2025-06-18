@@ -93,15 +93,18 @@
   --notes-headline-6-size: 1rem;
   --notes-body-size: 1rem;
   --notes-subhead-size: 0.95rem;
+  --notes-caption-size: 0.875rem;
   --notes-secondary-size: 1rem;
   --notes-disabled-size: 1rem;
   --notes-headline-weight: 700;
   --notes-body-weight: 400;
   --notes-secondary-weight: 400;
   --notes-subhead-weight: 400;
+  --notes-caption-weight: 400;
   --notes-disabled-weight: 400;
   --notes-secondary-color: var(--notes-gray-5);
   --notes-subhead-color: var(--notes-gray-4);
+  --notes-caption-color: var(--notes-gray-5);
   --notes-disabled-color: var(--notes-gray-6);
 }
 
@@ -168,10 +171,74 @@
   color: var(--notes-subhead-color);
   margin: 0;
 }
+.notes-caption {
+  font-family: var(--notes-font-family);
+  font-size: var(--notes-caption-size);
+  font-weight: var(--notes-caption-weight);
+  color: var(--notes-caption-color);
+  margin: 0;
+}
 .notes-disabled {
   font-family: var(--notes-font-family);
   font-size: var(--notes-disabled-size);
   font-weight: var(--notes-disabled-weight);
   color: var(--notes-disabled-color);
   margin: 0;
-} 
+}
+
+/* Color utility classes */
+.notes-color-white { color: var(--notes-white); }
+.notes-color-red-1 { color: var(--notes-red-1); }
+.notes-color-red-2 { color: var(--notes-red-2); }
+.notes-color-red-3 { color: var(--notes-red-3); }
+.notes-color-red-4 { color: var(--notes-red-4); }
+.notes-color-red-5 { color: var(--notes-red-5); }
+.notes-color-red-6 { color: var(--notes-red-6); }
+.notes-color-orange-1 { color: var(--notes-orange-1); }
+.notes-color-orange-2 { color: var(--notes-orange-2); }
+.notes-color-orange-3 { color: var(--notes-orange-3); }
+.notes-color-orange-4 { color: var(--notes-orange-4); }
+.notes-color-orange-5 { color: var(--notes-orange-5); }
+.notes-color-orange-6 { color: var(--notes-orange-6); }
+.notes-color-yellow-1 { color: var(--notes-yellow-1); }
+.notes-color-yellow-2 { color: var(--notes-yellow-2); }
+.notes-color-yellow-3 { color: var(--notes-yellow-3); }
+.notes-color-yellow-4 { color: var(--notes-yellow-4); }
+.notes-color-yellow-5 { color: var(--notes-yellow-5); }
+.notes-color-yellow-6 { color: var(--notes-yellow-6); }
+.notes-color-green-1 { color: var(--notes-green-1); }
+.notes-color-green-2 { color: var(--notes-green-2); }
+.notes-color-green-3 { color: var(--notes-green-3); }
+.notes-color-green-4 { color: var(--notes-green-4); }
+.notes-color-green-5 { color: var(--notes-green-5); }
+.notes-color-green-6 { color: var(--notes-green-6); }
+.notes-color-blue-1 { color: var(--notes-blue-1); }
+.notes-color-blue-2 { color: var(--notes-blue-2); }
+.notes-color-blue-3 { color: var(--notes-blue-3); }
+.notes-color-blue-4 { color: var(--notes-blue-4); }
+.notes-color-blue-5 { color: var(--notes-blue-5); }
+.notes-color-blue-6 { color: var(--notes-blue-6); }
+.notes-color-indigo-1 { color: var(--notes-indigo-1); }
+.notes-color-indigo-2 { color: var(--notes-indigo-2); }
+.notes-color-indigo-3 { color: var(--notes-indigo-3); }
+.notes-color-indigo-4 { color: var(--notes-indigo-4); }
+.notes-color-indigo-5 { color: var(--notes-indigo-5); }
+.notes-color-indigo-6 { color: var(--notes-indigo-6); }
+.notes-color-purple-1 { color: var(--notes-purple-1); }
+.notes-color-purple-2 { color: var(--notes-purple-2); }
+.notes-color-purple-3 { color: var(--notes-purple-3); }
+.notes-color-purple-4 { color: var(--notes-purple-4); }
+.notes-color-purple-5 { color: var(--notes-purple-5); }
+.notes-color-purple-6 { color: var(--notes-purple-6); }
+.notes-color-gray-1 { color: var(--notes-gray-1); }
+.notes-color-gray-2 { color: var(--notes-gray-2); }
+.notes-color-gray-3 { color: var(--notes-gray-3); }
+.notes-color-gray-4 { color: var(--notes-gray-4); }
+.notes-color-gray-5 { color: var(--notes-gray-5); }
+.notes-color-gray-6 { color: var(--notes-gray-6); }
+.notes-color-dark-blue-1 { color: var(--notes-dark-blue-1); }
+.notes-color-dark-blue-2 { color: var(--notes-dark-blue-2); }
+.notes-color-dark-blue-3 { color: var(--notes-dark-blue-3); }
+.notes-color-dark-blue-4 { color: var(--notes-dark-blue-4); }
+.notes-color-dark-blue-5 { color: var(--notes-dark-blue-5); }
+.notes-color-dark-blue-6 { color: var(--notes-dark-blue-6); } 

@@ -5,6 +5,7 @@ import { LoginCredentials } from '../../types/auth';
 import { Box, Paper, Typography, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import { Text } from '../../../../common/components';
 import styles from './login-page.module.css';
 import {getClasses} from "../../../../utils/class-utils";
 
@@ -51,9 +52,9 @@ export function LoginPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
-                <span className={getClasses('notes-headline-4', styles.signInTitle)}>
+                <Text variant="headline-4" className={styles.signInTitle}>
                     Sign in to your account
-                </span>
+                </Text>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
                         label="Email Address"
@@ -88,9 +89,9 @@ export function LoginPage() {
                         }}
                     />
                     {(validationError || error) && (
-                        <span className={getClasses('notes-body', styles.error)}>
+                        <Text variant="body" className={styles.error}>
                             {validationError || error}
-                        </span>
+                        </Text>
                     )}
                     <Button
                         type="submit"
@@ -101,9 +102,9 @@ export function LoginPage() {
                     >
                         Sign in
                     </Button>
-                    <span className={getClasses('notes-body', styles.registerLink)}>
+                    <Text variant="body" className={styles.registerLink}>
                         <Link to="/register">Don't have an account? Register</Link>
-                    </span>
+                    </Text>
                 </form>
             </Paper>
         </Box>

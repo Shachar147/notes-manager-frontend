@@ -11,6 +11,7 @@ import { ProtectedRoute } from './common/protected-route';
 import { LoginPage } from './features/auth/components/login/login-page';
 import { RegisterPage } from './features/auth/components/register/register-page';
 import { useAuth } from './features/auth/contexts/auth-context';
+import { Text } from './common/components';
 import styles from './app.module.css';
 
 const NotesApp = observer(() => {
@@ -30,7 +31,7 @@ const NotesApp = observer(() => {
         <div className={styles.appContainer}>
             <div className={styles.mainColumn}>
                 <div className={styles.header}>
-                    <span className={styles.welcome}>Welcome, {user?.email}</span>
+                    <Text className={styles.welcome}>Welcome, {user?.email}</Text>
                     <button onClick={logout}>Logout</button>
                 </div>
                 <div className={styles.contentRow}>
