@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
 import { RegisterCredentials } from '../../types/auth';
-import { Box, Paper, Typography, TextField, Button, InputAdornment } from '@mui/material';
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
-import { Text } from '../../../../common/components';
+import { Box, Paper, TextField, Button, InputAdornment } from '@mui/material';
+import { Text, Icon } from '../../../../common/components';
 import styles from './register-page.module.css';
-import {getClasses} from "../../../../utils/class-utils";
 
 export function RegisterPage() {
     const [credentials, setCredentials] = useState<RegisterCredentials>({
@@ -44,7 +41,7 @@ export function RegisterPage() {
         }
 
         if (!validatePassword(credentials.password)) {
-            setValidationError('Password must be at least 6 characters long');
+            setValidationError('Password must be at least 6 characters');
             return;
         }
 
@@ -55,7 +52,7 @@ export function RegisterPage() {
 
         try {
             await register(credentials);
-            navigate('/');
+            navigate('/', { replace: true });
         } catch (error) {
             // Error is handled by the auth context
         }
@@ -79,7 +76,7 @@ export function RegisterPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <EmailIcon />
+                                    <Icon name="envelope" />
                                 </InputAdornment>
                             ),
                         }}
@@ -95,7 +92,7 @@ export function RegisterPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <LockIcon />
+                                    <Icon name="lock" />
                                 </InputAdornment>
                             ),
                         }}
@@ -111,7 +108,7 @@ export function RegisterPage() {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <LockIcon />
+                                    <Icon name="lock" />
                                 </InputAdornment>
                             ),
                         }}

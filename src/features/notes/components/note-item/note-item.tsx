@@ -3,10 +3,9 @@ import { Note } from '../../types/notes';
 import { ListItem, ListItemText, Typography, IconButton } from '@mui/material';
 import styles from './note-item.module.css';
 import {observer} from "mobx-react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
 import Tooltip from '@mui/material/Tooltip';
 import {getClasses} from "../../../../utils/class-utils";
+import { Icon } from '../../../../common/components';
 
 interface NoteItemProps {
   note: Note;
@@ -31,14 +30,14 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
       onClick={() => onClick(note.id)}
       className={isSelected ? styles.listItemSelected : styles.listItem}
       secondaryAction={
-        <>
+        <div className="flex-row gap-4">
           <IconButton edge="end" aria-label="duplicate" onClick={e => { e.stopPropagation(); onDuplicate(note.id); }} size="small">
-            <FileCopyIcon fontSize="small" />
+            <Icon name="copy" size="small" />
           </IconButton>
           <IconButton edge="end" aria-label="delete" onClick={e => { e.stopPropagation(); onDelete(note.id); }} size="small">
-            <DeleteIcon fontSize="small" />
+            <Icon name="trash" size="small" />
           </IconButton>
-        </>
+        </div>
       }
     >
       <ListItemText

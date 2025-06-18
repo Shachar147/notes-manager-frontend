@@ -37,6 +37,18 @@ body {
     flex-direction: column;
 }
 
+.gap-2 {
+    gap: 2px;
+}
+
+.gap-4 {
+    gap: 4px;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
 .gap-10 {
     gap: 10px;
 }

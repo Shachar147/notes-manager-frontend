@@ -1,7 +1,8 @@
 import React from 'react';
-import Text from '../text/text';
+import Text from './text';
 import styles from './loader.module.css';
-import Icon from '../icon';
+import Icon from './icon';
+import { getClasses } from '../../utils/class-utils';
 
 interface LoaderProps {
   text?: string;
@@ -24,7 +25,7 @@ function Loader({
 
   return (
     <div className={`${styles.loader} ${className}`}>
-      <Icon name="spinner" color="blue-6" className={`fa-spin ${getSpinnerSize()}`} />
+      <Icon name="spinner" className={getClasses('fa-spin', getSpinnerSize())} />
       <Text variant="body" color="gray-5">
         {text}
       </Text>

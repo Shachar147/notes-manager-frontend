@@ -4,8 +4,7 @@ import NotesStore from '../../stores/notes-store';
 import { Virtuoso } from 'react-virtuoso';
 import NoteItem from '../note-item/note-item';
 import {IconButton} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import { Text, Loader } from '../../../../common/components';
+import { Text, Loader, Icon } from '../../../../common/components';
 import styles from './notes-list.module.css';
 
 interface NoteListProps {
@@ -38,7 +37,7 @@ function NotesList({ store }: NoteListProps) {
             <div className={styles.header}>
                 <Text variant="headline-6">Notes</Text>
                 <IconButton color="primary" onClick={handleCreateNewNote} size="small">
-                    <AddIcon />
+                    <Icon name="plus" size="small" />
                 </IconButton>
             </div>
 
