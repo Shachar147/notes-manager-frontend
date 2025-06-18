@@ -72,7 +72,7 @@ function NoteEditor({ store }: NoteEditorProps) {
   }
 
   return (
-    <Box p={4} display="flex" flexDirection="column" gap={2} maxWidth={800}>
+    <Box p={4} display="flex" flexDirection="column" gap={2} maxWidth="100%">
       <TextField
         label="Title"
         value={title}
