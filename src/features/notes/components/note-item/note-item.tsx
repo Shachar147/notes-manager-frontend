@@ -25,6 +25,7 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
 
   return (
     <ListItem
+      key={isSelected}
       button
       selected={isSelected}
       onClick={() => onClick(note.id)}
@@ -34,8 +35,8 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
           <IconButton edge="end" aria-label="duplicate" onClick={e => { e.stopPropagation(); onDuplicate(note.id); }} size="small">
             <Icon name="copy" size="small" />
           </IconButton>
-          <IconButton edge="end" aria-label="delete" onClick={e => { e.stopPropagation(); onDelete(note.id); }} size="small">
-            <Icon name="trash" size="small" />
+          <IconButton edge="end" aria-label="delete" onClick={e => { e.stopPropagation(); !isSelected && onDelete(note.id); }} size="small">
+            <Icon name="trash" color={isSelected ? 'gray-4' : 'black'} size="small" />
           </IconButton>
         </div>
       }
