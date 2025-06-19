@@ -61,10 +61,12 @@ export function RegisterPage() {
     return (
         <Box className={styles.root}>
             <Paper elevation={6} className={styles.paper}>
-                <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
-                <Text variant="headline-4" className={styles.registerTitle}>
-                    Create your account
-                </Text>
+                <div className="flex-column">
+                    <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
+                    <Text variant="headline-4" className={styles.registerTitle}>
+                        Create your account
+                    </Text>
+                </div>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <TextField
                         label="Email Address"
