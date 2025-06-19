@@ -21,7 +21,7 @@ import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import ImageIcon from '@mui/icons-material/Image';
 import { IconButton, Tooltip } from '@mui/material';
-import styles from './note-editor.module.css';
+import styles from './note-editor.module.scss';
 import { useTheme } from '@mui/material/styles';
 
 interface NoteEditorProps {

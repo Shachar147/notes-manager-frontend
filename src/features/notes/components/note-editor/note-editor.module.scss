@@ -30,3 +30,11 @@
   padding: 0;
   background: transparent;
 } 
+
+.tiptap-editor {
+  hr {
+    box-shadow: none;
+    border-bottom: 0;
+    border-top: 1px solid var(--notes-gray-3);
+  }
+}
