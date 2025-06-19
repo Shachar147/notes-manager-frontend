@@ -1,6 +1,7 @@
 .audit-history {
     width: 300px;
     height: 100%;
+    max-height: CALC(100vh - 50px);
     background: var(--notes-gray-1);
     border-left: 1px solid var(--notes-gray-3);
     padding: 20px;

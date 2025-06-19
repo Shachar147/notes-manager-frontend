@@ -1,0 +1,40 @@
+.tiptap-editor {
+  border: 1px solid var(--notes-gray-3);
+  border-radius: 8px;
+  padding-inline: 24px;
+  min-height: 200px;
+  background: var(--notes-white);
+  font-size: 1.1rem;
+  transition: border 0.2s;
+  box-sizing: border-box;
+  box-shadow: var(--notes-box-shadow-1);
+}
+.tiptap-editor:focus-within {
+  border-color: var(--notes-gray-4);
+}
+.tiptap-editor img {
+  max-width: 80%;
+  height: auto;
+  display: block;
+  /* margin: 16px auto; */
+  margin-block: 16px;
+  resize: both;
+  overflow: auto;
+  border-radius: 6px;
+  box-shadow: var(--notes-box-shadow-3);
+}
+/* Remove default border/padding from the EditorContent root if present */
+.tiptap-editor [contenteditable="true"] {
+  outline: none;
+  border: none;
+  padding: 0;
+  background: transparent;
+} 
+
+.tiptap-editor {
+  hr {
+    box-shadow: none;
+    border-bottom: 0;
+    border-top: 1px solid var(--notes-gray-3);
+  }
+}

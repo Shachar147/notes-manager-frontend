@@ -15,6 +15,13 @@ interface NoteItemProps {
   onDuplicate: (id: string) => void;
 }
 
+function stripHtml(html: string): string {
+  if (!html) return '';
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
+
 function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItemProps){
   const formattedDate = new Date(note.updatedAt).toLocaleDateString(undefined, {
     year: 'numeric',
@@ -56,7 +63,7 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
             <span
               className={getClasses('notes-body', styles.noteContent)}
             >
-              — {note.content.substring(0, 50) || 'No additional content'}
+              — {stripHtml(note.content.substring(0, 50) || 'No additional content')}
             </span>
           </>
         }
