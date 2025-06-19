@@ -6,6 +6,7 @@ import {observer} from "mobx-react";
 import Tooltip from '@mui/material/Tooltip';
 import {getClasses} from "../../../../utils/class-utils";
 import { Icon } from '../../../../common/components';
+import { stripHtml } from '../../../../utils/class-utils';
 
 interface NoteItemProps {
   note: Note;
@@ -13,13 +14,6 @@ interface NoteItemProps {
   onClick: (id: string) => void;
   onDelete: (id: string) => void;
   onDuplicate: (id: string) => void;
-}
-
-function stripHtml(html: string): string {
-  if (!html) return '';
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div.textContent || div.innerText || '';
 }
 
 function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItemProps){
@@ -31,7 +25,6 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
 
   return (
     <ListItem
-      key={isSelected}
       button
       selected={isSelected}
       onClick={() => onClick(note.id)}

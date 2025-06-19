@@ -99,15 +99,16 @@ export class NotesStore {
     try {
       await notesApiService.deleteNote(id);
       runInAction(() => {
+
+        if (this.selectedNoteId === id) {
+          this.selectedNoteId = null;
+          this.auditStore.clearHistory();
+        }
+
         this.notes = this.notes.filter(note => note.id !== id);
         this.totalNotes -= 1;
         this.isLoading = false;
       });
-
-      if (this.selectedNoteId === id) {
-        this.selectedNoteId = null;
-        void this.auditStore.clearHistory();
-      }
 
     } catch (error) {
       runInAction(() => {

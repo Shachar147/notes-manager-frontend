@@ -2,6 +2,7 @@ import {observer, Observer} from 'mobx-react';
 import { AuditStore } from '../../stores/audit.store';
 import { AuditTopic } from '../../types/audit.types';
 import { Text, Loader } from '../../../../common/components';
+import { stripHtml } from '../../../../utils/class-utils';
 import './audit-history.css';
 
 interface AuditHistoryProps {
@@ -27,6 +28,19 @@ const getEventTypeLabel = (eventType: AuditTopic) => {
     }
 };
 
+// Helper to get changed fields between two objects
+const getChangedFields = (oldData: Record<string, any> = {}, newData: Record<string, any> = {}) => {
+    const changed: string[] = [];
+    const allKeys = new Set([...Object.keys(oldData), ...Object.keys(newData)]);
+    allKeys.forEach((key) => {
+        if (key === 'updatedAt' || key === 'user') return; // Ignore updatedAt and user
+        if (oldData[key] !== newData[key]) {
+            changed.push(key);
+        }
+    });
+    return changed;
+};
+
 function AuditHistory({ store }: AuditHistoryProps) {
     return (
         <div className="audit-history">
@@ -39,26 +53,39 @@ function AuditHistory({ store }: AuditHistoryProps) {
                 <Text variant="body">No history available</Text>
             ) : (
                 <div className="audit-logs">
-                    {store.auditLogs.map((log) => (
-                        <div key={log.id} className="audit-log">
-                            <div className="audit-log-header">
-                                <Text variant="headline-6" className="event-type">{getEventTypeLabel(log.eventType)}</Text>
-                                <Text variant="subhead" className="timestamp">{formatDate(log.createdAt)}</Text>
-                            </div>
-                            {log.oldData && (
-                                <div className="changes">
-                                    <div className="old-data">
-                                        <Text variant="subhead">Previous</Text>
-                                        <pre>{JSON.stringify(log.oldData, null, 2)}</pre>
-                                    </div>
-                                    <div className="new-data">
-                                        <Text variant="subhead">New</Text>
-                                        <pre>{JSON.stringify(log.newData, null, 2)}</pre>
-                                    </div>
+                    {store.auditLogs.map((log) => {
+                        const changedFields = log.oldData && log.newData ? getChangedFields(log.oldData, log.newData) : [];
+                        return (
+                            <div key={log.id} className="audit-log">
+                                <div className="audit-log-header">
+                                    <Text variant="headline-6" className="event-type">{getEventTypeLabel(log.eventType)}</Text>
+                                    <Text variant="subhead" className="timestamp">{formatDate(log.createdAt)}</Text>
                                 </div>
-                            )}
-                        </div>
-                    ))}
+                                {log.oldData && log.newData && changedFields.length > 0 && (
+                                    <div className="changes">
+                                        <div className="old-data">
+                                            <Text variant="subhead">Previous</Text>
+                                            {changedFields.map((key) => (
+                                                <div key={key} style={{ marginBottom: 4 }}>
+                                                    <Text variant="caption">"{key}": </Text>
+                                                    <Text variant="body">was {stripHtml(log.oldData?.[key])}</Text>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="new-data">
+                                            <Text variant="subhead">New</Text>
+                                            {changedFields.map((key) => (
+                                                <div key={key} style={{ marginBottom: 4 }}>
+                                                    <Text variant="caption">"{key}": </Text>
+                                                    <Text variant="body">now {stripHtml(log.newData?.[key])}</Text>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             )}
         </div>
