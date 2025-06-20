@@ -1,35 +1,37 @@
 /* NotesList.module.css */
 
 .container {
-    width: 300px;
-    display: none;
-    border-right: 1px solid var(--notes-gray-2);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow-y: auto;
-    background-color: var(--notes-gray-1);
+  width: 300px;
+  display: none;
+  border-right: 1px solid var(--notes-gray-2);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--notes-gray-1);
 }
 
 .mobileContainer {
-    width: 100%;
+  width: 100%;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 16px;
-    border-bottom: 1px solid var(--notes-gray-2);
-    background-color: var(--notes-gray-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--notes-gray-2);
+  background-color: var(--notes-gray-2);
 }
 
 .emptyMessage {
-    padding: 16px;
-    text-align: center;
-    color: var(--notes-gray-5); /* fallback, ideally handled via theme or inline */
+  padding: 16px;
+  text-align: center;
+  color: var(
+    --notes-gray-5
+  ); /* fallback, ideally handled via theme or inline */
 }
 
 .list {
-    flex-grow: 1;
+  flex-grow: 1;
 }

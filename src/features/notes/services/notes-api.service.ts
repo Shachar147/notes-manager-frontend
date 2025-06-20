@@ -14,11 +14,10 @@ export const notesApiService = {
   createNote: (note: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>) =>
     axios.post<Note>(`${API_BASE_URL}/`, note),
 
-  updateNote: (id: string, note: Partial<Note>) => 
+  updateNote: (id: string, note: Partial<Note>) =>
     axios.put<Note>(`${API_BASE_URL}/${id}`, note),
-  
-  deleteNote: (id: string) => 
-    axios.delete(`${API_BASE_URL}/${id}`),
+
+  deleteNote: (id: string) => axios.delete(`${API_BASE_URL}/${id}`),
 
   duplicateNote: (originalNoteId: string) =>
     axios.post<Note>(`${API_BASE_URL}/${originalNoteId}/duplicate`, {}),

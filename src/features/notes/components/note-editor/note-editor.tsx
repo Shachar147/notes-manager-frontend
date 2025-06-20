@@ -30,7 +30,9 @@ interface NoteEditorProps {
 
 function NoteEditor({ store }: NoteEditorProps) {
   const theme = useTheme();
-  const selectedNote = store.notes.find(note => note.id === store.selectedNoteId);
+  const selectedNote = store.notes.find(
+    note => note.id === store.selectedNoteId
+  );
 
   const [title, setTitle] = React.useState(selectedNote?.title || '');
 
@@ -59,7 +61,10 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   const handleSave = async () => {
     if (selectedNote && editor) {
-      await store.updateNote(selectedNote.id, { title, content: editor.getHTML() });
+      await store.updateNote(selectedNote.id, {
+        title,
+        content: editor.getHTML(),
+      });
     }
   };
 
@@ -84,18 +89,113 @@ function NoteEditor({ store }: NoteEditorProps) {
       />
       {editor && (
         <TiptapBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-          <Box display="flex" gap={1} alignItems="center" bgcolor={theme.palette.grey[900]} borderRadius={2} p={1} boxShadow={theme.shadows[4]}>
-            <Tooltip title="H1"><IconButton onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}><TitleIcon fontSize="small" /><span style={{fontSize:10, color:'#fff'}}>H1</span></IconButton></Tooltip>
-            <Tooltip title="H2"><IconButton onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}><TitleIcon fontSize="small" /><span style={{fontSize:10, color:'#fff'}}>H2</span></IconButton></Tooltip>
-            <Tooltip title="H3"><IconButton onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}><TitleIcon fontSize="small" /><span style={{fontSize:10, color:'#fff'}}>H3</span></IconButton></Tooltip>
-            <Tooltip title="Body"><IconButton onClick={() => editor.chain().focus().setParagraph().run()}><span style={{fontSize:10, color:'#fff'}}>Body</span></IconButton></Tooltip>
-            <Tooltip title="Divider"><IconButton onClick={() => editor.chain().focus().setHorizontalRule().run()}><HorizontalRuleIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
-            <Tooltip title="Image"><IconButton onClick={() => { const url = window.prompt('Image URL'); if (url) editor.chain().focus().setImage({ src: url }).run(); }}><ImageIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
-            <Tooltip title="Code Block"><IconButton onClick={() => editor.chain().focus().toggleCodeBlock().run()}><CodeIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
-            <Tooltip title="Bold"><IconButton onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
-            <Tooltip title="Italic"><IconButton onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
-            <Tooltip title="Bullet List"><IconButton onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
-            <Tooltip title="Numbered List"><IconButton onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon fontSize="small" style={{color:'#fff'}} /></IconButton></Tooltip>
+          <Box
+            display="flex"
+            gap={1}
+            alignItems="center"
+            bgcolor={theme.palette.grey[900]}
+            borderRadius={2}
+            p={1}
+            boxShadow={theme.shadows[4]}
+          >
+            <Tooltip title="H1">
+              <IconButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 1 }).run()
+                }
+              >
+                <TitleIcon fontSize="small" />
+                <span style={{ fontSize: 10, color: '#fff' }}>H1</span>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="H2">
+              <IconButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 2 }).run()
+                }
+              >
+                <TitleIcon fontSize="small" />
+                <span style={{ fontSize: 10, color: '#fff' }}>H2</span>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="H3">
+              <IconButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 3 }).run()
+                }
+              >
+                <TitleIcon fontSize="small" />
+                <span style={{ fontSize: 10, color: '#fff' }}>H3</span>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Body">
+              <IconButton
+                onClick={() => editor.chain().focus().setParagraph().run()}
+              >
+                <span style={{ fontSize: 10, color: '#fff' }}>Body</span>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Divider">
+              <IconButton
+                onClick={() => editor.chain().focus().setHorizontalRule().run()}
+              >
+                <HorizontalRuleIcon
+                  fontSize="small"
+                  style={{ color: '#fff' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Image">
+              <IconButton
+                onClick={() => {
+                  const url = window.prompt('Image URL');
+                  if (url) editor.chain().focus().setImage({ src: url }).run();
+                }}
+              >
+                <ImageIcon fontSize="small" style={{ color: '#fff' }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Code Block">
+              <IconButton
+                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+              >
+                <CodeIcon fontSize="small" style={{ color: '#fff' }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Bold">
+              <IconButton
+                onClick={() => editor.chain().focus().toggleBold().run()}
+              >
+                <FormatBoldIcon fontSize="small" style={{ color: '#fff' }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Italic">
+              <IconButton
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+              >
+                <FormatItalicIcon fontSize="small" style={{ color: '#fff' }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Bullet List">
+              <IconButton
+                onClick={() => editor.chain().focus().toggleBulletList().run()}
+              >
+                <FormatListBulletedIcon
+                  fontSize="small"
+                  style={{ color: '#fff' }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Numbered List">
+              <IconButton
+                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+              >
+                <FormatListNumberedIcon
+                  fontSize="small"
+                  style={{ color: '#fff' }}
+                />
+              </IconButton>
+            </Tooltip>
           </Box>
         </TiptapBubbleMenu>
       )}

@@ -446,11 +446,7 @@ export type FAFileTypeIcon =
   | 'file-zip-o';
 
 // Spinner Icons
-export type FASpinnerIcon =
-  | 'circle-o-notch'
-  | 'cog'
-  | 'refresh'
-  | 'spinner';
+export type FASpinnerIcon = 'circle-o-notch' | 'cog' | 'refresh' | 'spinner';
 
 // Payment Icons
 export type FAPaymentIcon =
@@ -848,4 +844,4 @@ export type FontAwesomeIconName =
   | FADirectionalIcon
   | FAVideoPlayerIcon
   | FABrandIcon
-  | FAMedicalIcon; 
+  | FAMedicalIcon;
