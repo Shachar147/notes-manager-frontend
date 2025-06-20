@@ -1,62 +1,62 @@
 @import './design-system.scss';
 
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 body {
-    margin: 0;
-    min-width: 320px;
-    min-height: 100vh;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
 .loader-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: auto;
 }
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.width-100-percents{
-    width: 100%;
+.width-100-percents {
+  width: 100%;
 }
 
 .flex-col {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .gap-2 {
-    gap: 2px;
+  gap: 2px;
 }
 
 .gap-4 {
-    gap: 4px;
+  gap: 4px;
 }
 
 .gap-8 {
-    gap: 8px;
+  gap: 8px;
 }
 
 .gap-10 {
-    gap: 10px;
+  gap: 10px;
 }
 
 .align-items-center {
-    align-items: center;
+  align-items: center;
 }
 
 input:-internal-autofill-selected {
-    background: var(--notes-white) !important;
+  background: var(--notes-white) !important;
 }

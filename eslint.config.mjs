@@ -19,6 +19,14 @@ export default [
         sourceType: 'module',
         project: './tsconfig.json',
       },
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        setTimeout: 'readonly',
+        console: 'readonly',
+        fetch: 'readonly'
+      }
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -34,6 +42,8 @@ export default [
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-unused-vars': 'error',
       'no-unused-vars': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      'react/no-unescaped-entities': 'off',
     },
     settings: {
       react: {

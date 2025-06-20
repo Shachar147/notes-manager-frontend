@@ -1,7 +1,13 @@
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { notesApiService } from '../services/notes-api.service';
 import { Note } from '../types/notes';
-import {AuditStore} from "../../audit/stores/audit.store";
+import { AuditStore } from '../../audit/stores/audit.store';
 
 export class NotesStore {
   @observable notes: Note[] = [];
@@ -27,7 +33,7 @@ export class NotesStore {
         this.totalNotes = response.data.data.total;
         this.isLoading = false;
       });
-    } catch (error) {
+    } catch {
       runInAction(() => {
         this.error = 'Failed to fetch notes';
         this.isLoading = false;
@@ -45,7 +51,7 @@ export class NotesStore {
         this.totalNotes += 1;
         this.isLoading = false;
       });
-    } catch (error) {
+    } catch {
       runInAction(() => {
         this.error = 'Failed to create note';
         this.isLoading = false;
@@ -63,7 +69,7 @@ export class NotesStore {
         this.totalNotes += 1;
         this.isLoading = false;
       });
-    } catch (error) {
+    } catch {
       runInAction(() => {
         this.error = 'Failed to create note';
         this.isLoading = false;
@@ -83,7 +89,7 @@ export class NotesStore {
         }
         this.isLoading = false;
       });
-    } catch (error) {
+    } catch {
       runInAction(() => {
         this.error = 'Failed to update note';
         this.isLoading = false;
@@ -99,7 +105,6 @@ export class NotesStore {
     try {
       await notesApiService.deleteNote(id);
       runInAction(() => {
-
         if (this.selectedNoteId === id) {
           this.selectedNoteId = null;
           this.auditStore.clearHistory();
@@ -109,8 +114,7 @@ export class NotesStore {
         this.totalNotes -= 1;
         this.isLoading = false;
       });
-
-    } catch (error) {
+    } catch {
       runInAction(() => {
         this.error = 'Failed to delete note';
         this.isLoading = false;
@@ -125,8 +129,9 @@ export class NotesStore {
   }
 
   @computed
-  get notesSorted(){
-    return [...this.notes].sort((a, b) =>
+  get notesSorted() {
+    return [...this.notes].sort(
+      (a, b) =>
         new Date(b.updatedAt ?? b.createdAt).getTime() -
         new Date(a.updatedAt ?? a.createdAt).getTime()
     );

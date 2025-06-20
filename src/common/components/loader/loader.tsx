@@ -9,22 +9,29 @@ interface LoaderProps {
   className?: string;
 }
 
-function Loader({ 
-  text = 'Loading...', 
+function Loader({
+  text = 'Loading...',
   size = 'medium',
-  className = ''
+  className = '',
 }: LoaderProps) {
   const getSpinnerSize = () => {
     switch (size) {
-      case 'small': return 'fa-lg';
-      case 'large': return 'fa-3x';
-      default: return 'fa-2x';
+      case 'small':
+        return 'fa-lg';
+      case 'large':
+        return 'fa-3x';
+      default:
+        return 'fa-2x';
     }
   };
 
   return (
     <div className={`${styles.loader} ${className}`}>
-      <Icon name="spinner" color="blue-6" className={`fa-spin ${getSpinnerSize()}`} />
+      <Icon
+        name="spinner"
+        color="blue-6"
+        className={`fa-spin ${getSpinnerSize()}`}
+      />
       <Text variant="body" color="gray-5">
         {text}
       </Text>
@@ -32,4 +39,4 @@ function Loader({
   );
 }
 
-export default Loader; 
+export default Loader;

@@ -24,12 +24,12 @@
   box-shadow: var(--notes-box-shadow-3);
 }
 /* Remove default border/padding from the EditorContent root if present */
-.tiptap-editor [contenteditable="true"] {
+.tiptap-editor [contenteditable='true'] {
   outline: none;
   border: none;
   padding: 0;
   background: transparent;
-} 
+}
 
 .tiptap-editor {
   hr {

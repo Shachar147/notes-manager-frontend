@@ -12,9 +12,16 @@ interface SidebarDrawerProps {
 function SidebarDrawer({ open, onClose, children }: SidebarDrawerProps) {
   return (
     <>
-      <div className={getClasses(styles.overlay, open && styles.open)} onClick={onClose} />
+      <div
+        className={getClasses(styles.overlay, open && styles.open)}
+        onClick={onClose}
+      />
       <aside className={getClasses(styles.drawer, open && styles.open)}>
-        <button className={styles.closeButton} onClick={onClose} aria-label="Close sidebar">
+        <button
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="Close sidebar"
+        >
           <Icon name="times" size="small" />
         </button>
         <div className={styles.content}>{children}</div>
@@ -23,4 +30,4 @@ function SidebarDrawer({ open, onClose, children }: SidebarDrawerProps) {
   );
 }
 
-export default SidebarDrawer; 
+export default SidebarDrawer;

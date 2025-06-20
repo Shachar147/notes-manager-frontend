@@ -200,23 +200,23 @@
   .container {
     padding: 1rem;
   }
-  
+
   .section {
     padding: 1rem;
   }
-  
+
   .colorGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .iconGrid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
-  
+
   .iconSizesGrid {
     gap: 1rem;
   }
-  
+
   .iconColorsGrid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
@@ -248,4 +248,4 @@
   box-shadow: var(--notes-box-shadow-2);
   pointer-events: none;
   z-index: 2;
-} 
+}

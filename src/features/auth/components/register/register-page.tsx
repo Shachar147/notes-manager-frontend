@@ -7,134 +7,151 @@ import { Text, Icon } from '../../../../common/components';
 import styles from './register-page.module.css';
 
 export function RegisterPage() {
-    const [credentials, setCredentials] = useState<RegisterCredentials>({
-        email: '',
-        password: '',
-        confirmPassword: ''
-    });
-    const [validationError, setValidationError] = useState<string | null>(null);
-    const { register, error, clearError } = useAuth();
-    const navigate = useNavigate();
+  const [credentials, setCredentials] = useState<RegisterCredentials>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const { register, error, clearError } = useAuth();
+  const navigate = useNavigate();
 
-    const validateEmail = (email: string): boolean => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
-    const validatePassword = (password: string): boolean => {
-        return password.length >= 6;
-    };
+  const validatePassword = (password: string): boolean => {
+    return password.length >= 6;
+  };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setValidationError(null);
-        clearError();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setValidationError(null);
+    clearError();
 
-        if (!credentials.email || !credentials.password || !credentials.confirmPassword) {
-            setValidationError('All fields are required');
-            return;
-        }
+    if (
+      !credentials.email ||
+      !credentials.password ||
+      !credentials.confirmPassword
+    ) {
+      setValidationError('All fields are required');
+      return;
+    }
 
-        if (!validateEmail(credentials.email)) {
-            setValidationError('Please enter a valid email address');
-            return;
-        }
+    if (!validateEmail(credentials.email)) {
+      setValidationError('Please enter a valid email address');
+      return;
+    }
 
-        if (!validatePassword(credentials.password)) {
-            setValidationError('Password must be at least 6 characters');
-            return;
-        }
+    if (!validatePassword(credentials.password)) {
+      setValidationError('Password must be at least 6 characters');
+      return;
+    }
 
-        if (credentials.password !== credentials.confirmPassword) {
-            setValidationError('Passwords do not match');
-            return;
-        }
+    if (credentials.password !== credentials.confirmPassword) {
+      setValidationError('Passwords do not match');
+      return;
+    }
 
-        try {
-            await register(credentials);
-            navigate('/', { replace: true });
-        } catch (error) {
-            // Error is handled by the auth context
-        }
-    };
+    try {
+      await register(credentials);
+      navigate('/', { replace: true });
+    } catch {
+      // Error is handled by the auth context
+    }
+  };
 
-    return (
-        <Box className={styles.root}>
-            <Paper elevation={6} className={styles.paper}>
-                <div className="flex-column">
-                    <img src="/src/images/logo.png" alt="Notes Logo" className={styles.logo} />
-                    <Text variant="headline-4" className={styles.registerTitle}>
-                        Create your account
-                    </Text>
-                </div>
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <TextField
-                        label="Email Address"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        type="email"
-                        value={credentials.email}
-                        onChange={e => setCredentials({ ...credentials, email: e.target.value })}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Icon name="envelope" />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        label="Password"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        type="password"
-                        value={credentials.password}
-                        onChange={e => setCredentials({ ...credentials, password: e.target.value })}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Icon name="lock" />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        label="Confirm Password"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        type="password"
-                        value={credentials.confirmPassword}
-                        onChange={e => setCredentials({ ...credentials, confirmPassword: e.target.value })}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Icon name="lock" />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    {(validationError || error) && (
-                        <Text variant="body" className={styles.error}>
-                            {validationError || error}
-                        </Text>
-                    )}
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        className={styles.button}
-                    >
-                        Register
-                    </Button>
-                    <Text variant="body" className={styles.loginLink}>
-                        <Link to="/login">Already have an account? Sign in</Link>
-                    </Text>
-                </form>
-            </Paper>
-        </Box>
-    );
-} 
+  return (
+    <Box className={styles.root}>
+      <Paper elevation={6} className={styles.paper}>
+        <div className="flex-column">
+          <img
+            src="/src/images/logo.png"
+            alt="Notes Logo"
+            className={styles.logo}
+          />
+          <Text variant="headline-4" className={styles.registerTitle}>
+            Create your account
+          </Text>
+        </div>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <TextField
+            label="Email Address"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            type="email"
+            value={credentials.email}
+            onChange={e =>
+              setCredentials({ ...credentials, email: e.target.value })
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon name="envelope" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="Password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            type="password"
+            value={credentials.password}
+            onChange={e =>
+              setCredentials({ ...credentials, password: e.target.value })
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon name="lock" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="Confirm Password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            type="password"
+            value={credentials.confirmPassword}
+            onChange={e =>
+              setCredentials({
+                ...credentials,
+                confirmPassword: e.target.value,
+              })
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon name="lock" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          {(validationError || error) && (
+            <Text variant="body" className={styles.error}>
+              {validationError || error}
+            </Text>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            className={styles.button}
+          >
+            Register
+          </Button>
+          <Text variant="body" className={styles.loginLink}>
+            <Link to="/login">Already have an account? Sign in</Link>
+          </Text>
+        </form>
+      </Paper>
+    </Box>
+  );
+}

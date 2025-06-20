@@ -7,7 +7,7 @@ export function FoundationPage() {
   // All typography variants
   const typographyVariants = [
     'headline-1',
-    'headline-2', 
+    'headline-2',
     'headline-3',
     'headline-4',
     'headline-5',
@@ -16,21 +16,90 @@ export function FoundationPage() {
     'subhead',
     'caption',
     'secondary',
-    'disabled'
+    'disabled',
   ] as const;
 
   // All color palettes
   const colorPalettes = [
     { name: 'Black & White', colors: ['black', 'white'] },
-    { name: 'Red Scale', colors: ['red-1', 'red-2', 'red-3', 'red-4', 'red-5', 'red-6'] },
-    { name: 'Orange Scale', colors: ['orange-1', 'orange-2', 'orange-3', 'orange-4', 'orange-5', 'orange-6'] },
-    { name: 'Yellow Scale', colors: ['yellow-1', 'yellow-2', 'yellow-3', 'yellow-4', 'yellow-5', 'yellow-6'] },
-    { name: 'Green Scale', colors: ['green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6'] },
-    { name: 'Blue Scale', colors: ['blue-1', 'blue-2', 'blue-3', 'blue-4', 'blue-5', 'blue-6'] },
-    { name: 'Indigo Scale', colors: ['indigo-1', 'indigo-2', 'indigo-3', 'indigo-4', 'indigo-5', 'indigo-6'] },
-    { name: 'Purple Scale', colors: ['purple-1', 'purple-2', 'purple-3', 'purple-4', 'purple-5', 'purple-6'] },
-    { name: 'Gray Scale', colors: ['gray-1', 'gray-2', 'gray-3', 'gray-4', 'gray-5', 'gray-6'] },
-    { name: 'Dark Blue Scale', colors: ['dark-blue-1', 'dark-blue-2', 'dark-blue-3', 'dark-blue-4', 'dark-blue-5', 'dark-blue-6'] }
+    {
+      name: 'Red Scale',
+      colors: ['red-1', 'red-2', 'red-3', 'red-4', 'red-5', 'red-6'],
+    },
+    {
+      name: 'Orange Scale',
+      colors: [
+        'orange-1',
+        'orange-2',
+        'orange-3',
+        'orange-4',
+        'orange-5',
+        'orange-6',
+      ],
+    },
+    {
+      name: 'Yellow Scale',
+      colors: [
+        'yellow-1',
+        'yellow-2',
+        'yellow-3',
+        'yellow-4',
+        'yellow-5',
+        'yellow-6',
+      ],
+    },
+    {
+      name: 'Green Scale',
+      colors: [
+        'green-1',
+        'green-2',
+        'green-3',
+        'green-4',
+        'green-5',
+        'green-6',
+      ],
+    },
+    {
+      name: 'Blue Scale',
+      colors: ['blue-1', 'blue-2', 'blue-3', 'blue-4', 'blue-5', 'blue-6'],
+    },
+    {
+      name: 'Indigo Scale',
+      colors: [
+        'indigo-1',
+        'indigo-2',
+        'indigo-3',
+        'indigo-4',
+        'indigo-5',
+        'indigo-6',
+      ],
+    },
+    {
+      name: 'Purple Scale',
+      colors: [
+        'purple-1',
+        'purple-2',
+        'purple-3',
+        'purple-4',
+        'purple-5',
+        'purple-6',
+      ],
+    },
+    {
+      name: 'Gray Scale',
+      colors: ['gray-1', 'gray-2', 'gray-3', 'gray-4', 'gray-5', 'gray-6'],
+    },
+    {
+      name: 'Dark Blue Scale',
+      colors: [
+        'dark-blue-1',
+        'dark-blue-2',
+        'dark-blue-3',
+        'dark-blue-4',
+        'dark-blue-5',
+        'dark-blue-6',
+      ],
+    },
   ];
 
   // Sample icons from different categories (only valid FontAwesomeIconName values)
@@ -276,7 +345,7 @@ export function FoundationPage() {
     { name: 'circle-o-notch', category: 'Spinner' },
     { name: 'cog', category: 'Spinner' },
     { name: 'refresh', category: 'Spinner' },
-    { name: 'spinner', category: 'Spinner' }
+    { name: 'spinner', category: 'Spinner' },
   ];
 
   // Icon search state
@@ -284,9 +353,10 @@ export function FoundationPage() {
   const [copiedIcon, setCopiedIcon] = useState<string | null>(null);
 
   // Filter icons by search
-  const filteredIcons = sampleIcons.filter(icon =>
-    icon.name.includes(iconSearch.toLowerCase()) ||
-    icon.category.toLowerCase().includes(iconSearch.toLowerCase())
+  const filteredIcons = sampleIcons.filter(
+    icon =>
+      icon.name.includes(iconSearch.toLowerCase()) ||
+      icon.category.toLowerCase().includes(iconSearch.toLowerCase())
   );
 
   // Copy icon name to clipboard
@@ -295,15 +365,17 @@ export function FoundationPage() {
       await navigator.clipboard.writeText(iconName);
       setCopiedIcon(iconName);
       setTimeout(() => setCopiedIcon(null), 1200);
-    } catch {}
+    } catch {
+      // do nothing
+    }
   };
 
   return (
     <Box className={styles.container}>
-        <Text variant="headline-3" className={styles.pageTitle}>
+      <Text variant="headline-3" className={styles.pageTitle}>
         Design System Foundation
       </Text>
-      
+
       {/* Typography Section */}
       <Paper elevation={2} className={styles.section}>
         <Text variant="headline-4" className={styles.sectionTitle}>
@@ -312,14 +384,12 @@ export function FoundationPage() {
         <Divider className={styles.divider} />
         <div className={styles.sectionContent}>
           <div className={styles.typographyGrid}>
-            {typographyVariants.map((variant) => (
+            {typographyVariants.map(variant => (
               <div key={variant} className={styles.typographyItem}>
                 <Text variant={variant} className={styles.typographyLabel}>
                   {variant.replace('-', ' ').toUpperCase()}
                 </Text>
-                <Text variant={variant}>
-                  The quick brown fox
-                </Text>
+                <Text variant={variant}>The quick brown fox</Text>
               </div>
             ))}
           </div>
@@ -334,16 +404,16 @@ export function FoundationPage() {
         <Divider className={styles.divider} />
         <div className={styles.sectionContent}>
           <div className={styles.colorGrid}>
-            {colorPalettes.map((palette) => (
+            {colorPalettes.map(palette => (
               <div key={palette.name} className={styles.colorPalette}>
                 <Text variant="headline-6" className={styles.paletteName}>
                   {palette.name}
                 </Text>
                 <div className={styles.colorSwatches}>
-                  {palette.colors.map((color) => (
+                  {palette.colors.map(color => (
                     <div key={color} className={styles.colorSwatch}>
-                      <div 
-                        className={styles.colorBox} 
+                      <div
+                        className={styles.colorBox}
                         style={{ backgroundColor: `var(--notes-${color})` }}
                       />
                       <Text variant="caption" className={styles.colorName}>
@@ -373,7 +443,7 @@ export function FoundationPage() {
             className={styles.iconSearchInput}
           />
           <div className={styles.iconGrid}>
-            {filteredIcons.map((icon) => (
+            {filteredIcons.map(icon => (
               <div
                 key={icon.name}
                 className={styles.iconItem}
@@ -401,7 +471,7 @@ export function FoundationPage() {
       <Paper elevation={2} className={styles.section}>
         <Text variant="headline-4" className={styles.sectionTitle}>
           Icon Sizes
-          </Text>
+        </Text>
         <Divider className={styles.divider} />
         <div className={styles.sectionContent}>
           <div className={styles.iconSizesGrid}>
@@ -470,4 +540,4 @@ export function FoundationPage() {
       </Paper>
     </Box>
   );
-} 
+}
