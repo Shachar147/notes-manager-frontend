@@ -96,7 +96,10 @@ export class NotesStore {
       });
     }
 
-    void this.auditStore.fetchEntityHistory('note', this.selectedNoteId!);
+    // add some gap since audit is being written in async event
+    setTimeout(() => {
+      void this.auditStore.fetchEntityHistory('note', this.selectedNoteId!)
+    }, 2000);
   }
 
   @action
