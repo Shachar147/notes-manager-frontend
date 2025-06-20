@@ -56,3 +56,7 @@ body {
 .align-items-center {
     align-items: center;
 }
+
+input:-internal-autofill-selected {
+    background: var(--notes-white) !important;
+}

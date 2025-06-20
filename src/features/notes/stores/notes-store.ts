@@ -1,15 +1,19 @@
-import {observable, action, runInAction, makeObservable, computed} from 'mobx';
-import { Note } from '../types/notes';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { notesApiService } from '../services/notes-api.service';
+import { Note } from '../types/notes';
+import {AuditStore} from "../../audit/stores/audit.store";
 
 export class NotesStore {
   @observable notes: Note[] = [];
+  @observable totalNotes: number = 0;
   @observable isLoading = false;
   @observable error: string | null = null;
   @observable selectedNoteId: string | null = null;
+  auditStore: AuditStore;
 
-  constructor() {
+  constructor(auditStore: AuditStore) {
     makeObservable(this);
+    this.auditStore = auditStore;
     void this.fetchNotes();
   }
 
@@ -19,7 +23,8 @@ export class NotesStore {
     try {
       const response = await notesApiService.getNotes();
       runInAction(() => {
-        this.notes = response.data.data;
+        this.notes = response.data.data.notes;
+        this.totalNotes = response.data.data.total;
         this.isLoading = false;
       });
     } catch (error) {
@@ -37,6 +42,7 @@ export class NotesStore {
       const response = await notesApiService.createNote({ title, content });
       runInAction(() => {
         this.notes.push(response.data.data);
+        this.totalNotes += 1;
         this.isLoading = false;
       });
     } catch (error) {
@@ -54,6 +60,7 @@ export class NotesStore {
       const response = await notesApiService.duplicateNote(originalNoteId);
       runInAction(() => {
         this.notes.push(response.data.data);
+        this.totalNotes += 1;
         this.isLoading = false;
       });
     } catch (error) {
@@ -82,6 +89,8 @@ export class NotesStore {
         this.isLoading = false;
       });
     }
+
+    void this.auditStore.fetchEntityHistory('note', this.selectedNoteId!);
   }
 
   @action
@@ -90,9 +99,17 @@ export class NotesStore {
     try {
       await notesApiService.deleteNote(id);
       runInAction(() => {
+
+        if (this.selectedNoteId === id) {
+          this.selectedNoteId = null;
+          this.auditStore.clearHistory();
+        }
+
         this.notes = this.notes.filter(note => note.id !== id);
+        this.totalNotes -= 1;
         this.isLoading = false;
       });
+
     } catch (error) {
       runInAction(() => {
         this.error = 'Failed to delete note';
@@ -104,6 +121,7 @@ export class NotesStore {
   @action
   setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
+    void this.auditStore.fetchEntityHistory('note', this.selectedNoteId);
   }
 
   @computed

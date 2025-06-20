@@ -1,10 +1,15 @@
 import axios from 'axios';
 import { Note } from '../types/notes';
 
+interface NotesResponse {
+  notes: Note[];
+  total: number;
+}
+
 const API_BASE_URL = '/api/notes';
 
 export const notesApiService = {
-  getNotes: () => axios.get<Note[]>(`${API_BASE_URL}/`),
+  getNotes: () => axios.get<NotesResponse>(`${API_BASE_URL}/`),
 
   createNote: (note: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>) =>
     axios.post<Note>(`${API_BASE_URL}/`, note),

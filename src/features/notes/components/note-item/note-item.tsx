@@ -6,6 +6,7 @@ import {observer} from "mobx-react";
 import Tooltip from '@mui/material/Tooltip';
 import {getClasses} from "../../../../utils/class-utils";
 import { Icon } from '../../../../common/components';
+import { stripHtml } from "../../../../utils/utils";
 
 interface NoteItemProps {
   note: Note;
@@ -34,8 +35,8 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
           <IconButton edge="end" aria-label="duplicate" onClick={e => { e.stopPropagation(); onDuplicate(note.id); }} size="small">
             <Icon name="copy" size="small" />
           </IconButton>
-          <IconButton edge="end" aria-label="delete" onClick={e => { e.stopPropagation(); onDelete(note.id); }} size="small">
-            <Icon name="trash" size="small" />
+          <IconButton edge="end" aria-label="delete" onClick={e => { e.stopPropagation(); !isSelected && onDelete(note.id); }} size="small">
+            <Icon name="trash" color={isSelected ? 'gray-4' : 'black'} size="small" />
           </IconButton>
         </div>
       }
@@ -56,7 +57,7 @@ function NoteItem({ note, isSelected, onClick, onDelete, onDuplicate }: NoteItem
             <span
               className={getClasses('notes-body', styles.noteContent)}
             >
-              — {note.content.substring(0, 50) || 'No additional content'}
+              — {stripHtml(note.content.substring(0, 50) || 'No additional content')}
             </span>
           </>
         }

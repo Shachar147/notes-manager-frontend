@@ -1,12 +1,11 @@
-import React from 'react';
+import { IconButton } from '@mui/material';
 import { observer, Observer } from 'mobx-react-lite';
-import NotesStore from '../../stores/notes-store';
 import { Virtuoso } from 'react-virtuoso';
-import NoteItem from '../note-item/note-item';
-import {IconButton} from '@mui/material';
-import { Text, Loader, Icon } from '../../../../common/components';
-import styles from './notes-list.module.css';
+import { Icon, Loader, Text } from '../../../../common/components';
 import { getClasses } from '../../../../utils/class-utils';
+import NotesStore from '../../stores/notes-store';
+import NoteItem from '../note-item/note-item';
+import styles from './notes-list.module.css';
 
 interface NoteListProps {
     store: NotesStore
@@ -37,7 +36,7 @@ function NotesList({ store, isMobile = false }: NoteListProps) {
     return (
         <div className={getClasses(styles.container, isMobile && styles.mobileContainer)}>
             <div className={styles.header}>
-                <Text variant="headline-6">Notes</Text>
+                <Text variant="headline-6">Notes ({store.totalNotes})</Text>
                 <IconButton color="primary" onClick={handleCreateNewNote} size="small">
                     <Icon name="plus" size="small" />
                 </IconButton>
