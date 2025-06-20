@@ -8,7 +8,7 @@ import prettierConfig from 'eslint-config-prettier/flat';
 
 export default [
   js.configs.recommended,
-  ...prettierConfig,
+  prettierConfig,
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
