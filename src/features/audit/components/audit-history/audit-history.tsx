@@ -2,7 +2,7 @@ import {observer, Observer} from 'mobx-react';
 import { AuditStore } from '../../stores/audit.store';
 import { AuditTopic } from '../../types/audit.types';
 import { Text, Loader } from '../../../../common/components';
-import { stripHtml } from '../../../../utils/class-utils';
+import { stripHtml } from "../../../../utils/utils";
 import './audit-history.css';
 
 interface AuditHistoryProps {

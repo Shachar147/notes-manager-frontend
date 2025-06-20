@@ -6,7 +6,7 @@ import {observer} from "mobx-react";
 import Tooltip from '@mui/material/Tooltip';
 import {getClasses} from "../../../../utils/class-utils";
 import { Icon } from '../../../../common/components';
-import { stripHtml } from '../../../../utils/class-utils';
+import { stripHtml } from "../../../../utils/utils";
 
 interface NoteItemProps {
   note: Note;
