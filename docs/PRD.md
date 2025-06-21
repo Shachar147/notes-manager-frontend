@@ -98,16 +98,16 @@ Upgrade the notes-manager app to allow users to search and retrieve notes using 
 ## Implementation Plan Checklist
 
 ### Backend
-- [ ] **Backend - Add Ollama service to docker-compose.yml**
-- [ ] **Backend - Set up Ollama server and ensure it is accessible from the backend**
-- [ ] **Backend - Add embedding generation for notes (on create/update)**
-- [ ] **Backend - Store embeddings in a separate table (note_embedding) for scalability**
-- [ ] **Backend - Implement semantic search logic (find top relevant notes by embedding similarity)**
-- [ ] **Backend - Create POST /api/chat endpoint**
-- [ ] **Backend - In /api/chat, process user question: generate embedding, find relevant notes, send context to Ollama, return short answer + links**
-- [ ] **Backend - Do not return embeddings in GET notes endpoint**
-- [ ] **Backend - Add error handling using logger.error so errors are written to ElasticSearch**
-- [ ] **Backend - Track note usage in chatbot answers: create note_chatbot_usage table and increment usage on each answer**
+- [x] **Backend - Add Ollama service to docker-compose.yml**
+- [x] **Backend - Set up Ollama server and ensure it is accessible from the backend**
+- [x] **Backend - Add embedding generation for notes (on create/update)**
+- [x] **Backend - Store embeddings in a separate table (note_embedding) for scalability**
+- [x] **Backend - Implement semantic search logic (find top relevant notes by embedding similarity)**
+- [x] **Backend - Create POST /api/chat endpoint**
+- [x] **Backend - In /api/chat, process user question: generate embedding, find relevant notes, send context to Ollama, return short answer + links**
+- [x] **Backend - Do not return embeddings in GET notes endpoint**
+- [x] **Backend - Add error handling using logger.error so errors are written to ElasticSearch**
+- [x] **Backend - Track note usage in chatbot answers: create note_chatbot_usage table and increment usage on each answer**
 - [ ] **Backend - Write tests for chat endpoint, semantic search, and analytics tracking**
 
 ### Frontend
