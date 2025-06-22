@@ -108,7 +108,7 @@ Upgrade the notes-manager app to allow users to search and retrieve notes using 
 - [x] **Backend - Do not return embeddings in GET notes endpoint**
 - [x] **Backend - Add error handling using logger.error so errors are written to ElasticSearch**
 - [x] **Backend - Track note usage in chatbot answers: create note_chatbot_usage table and increment usage on each answer**
-- [ ] **Backend - Write tests for chat endpoint, semantic search, and analytics tracking**
+- [x] **Backend - Write tests for chat endpoint, semantic search, and analytics tracking**
 
 ### Frontend
 - [ ] **Frontend - Add floating chat icon button to bottom right of the app**
