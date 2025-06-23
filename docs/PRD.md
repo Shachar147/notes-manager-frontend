@@ -114,7 +114,7 @@ Upgrade the notes-manager app to allow users to search and retrieve notes using 
 - [x] **Frontend - Add floating chat icon button to bottom right of the app**
 - [x] **Frontend - Implement chatbot window UI (opens on icon click, closes on outside click or X)**
 - [x] **Frontend - Add input box for user question and submit button**
-- [ ] **Frontend - Display AI response: short answer and links to relevant notes**
+- [x] **Frontend - Display AI response: short answer and links to relevant notes**
 - [ ] **Frontend - Link to note detail page from chat response**
 - [x] **Frontend - Show loading indicator while waiting for response**
 - [ ] **Frontend - Add error handling for failed chat requests**

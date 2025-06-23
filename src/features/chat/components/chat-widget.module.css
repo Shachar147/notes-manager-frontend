@@ -162,4 +162,38 @@
   background: var(--notes-blue-2);
   color: var(--notes-blue-6);
   outline: none;
+}
+.codeBlockWrapper {
+  position: relative;
+  margin: 0.5rem 0;
+}
+.codeBlock {
+  background: var(--notes-gray-2);
+  border: 1px solid var(--notes-gray-4);
+  color: var(--notes-black);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+  font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  overflow-x: auto;
+  white-space: pre;
+  box-shadow: var(--notes-box-shadow-1);
+}
+.copyBtn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  background: var(--notes-blue-1);
+  color: var(--notes-blue-6);
+  border: 1px solid var(--notes-blue-3);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  z-index: 2;
+  transition: background 0.15s, color 0.15s;
+}
+.copyBtn:hover, .copyBtn:focus {
+  background: var(--notes-blue-2);
+  color: var(--notes-blue-5);
+  outline: none;
 } 

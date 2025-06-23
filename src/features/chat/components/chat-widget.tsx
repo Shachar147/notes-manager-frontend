@@ -12,6 +12,25 @@ const initialMessages: Message[] = [
   { sender: 'bot', text: 'Hi! How can I help you today?' }
 ];
 
+// Utility to parse Markdown code blocks
+function parseMessageWithCodeBlocks(text: string) {
+  const regex = /```([a-zA-Z0-9]*)\n([\s\S]*?)```/g;
+  const parts: Array<{ type: 'text' | 'code'; content: string; lang?: string }> = [];
+  let lastIndex = 0;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ type: 'text', content: text.slice(lastIndex, match.index) });
+    }
+    parts.push({ type: 'code', content: match[2], lang: match[1] });
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push({ type: 'text', content: text.slice(lastIndex) });
+  }
+  return parts;
+}
+
 const ChatWidget: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -19,6 +38,7 @@ const ChatWidget: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const conversationRef = useRef<HTMLDivElement>(null);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   useEffect(() => {
     if (open && conversationRef.current) {
@@ -54,26 +74,53 @@ const ChatWidget: React.FC = () => {
     }
   };
 
-  const renderBotMessage = (msg: Message, idx: number) => (
-    <div key={idx} className={styles.botMsg} aria-live="polite">
-      <div>{msg.text}</div>
-      {msg.notes && msg.notes.length > 0 && (
-        <div className={styles.noteLinks}>
-          {msg.notes.map((note) => (
-            <a
-              key={note.id}
-              href={`/notes/${note.id}`}
-              className={styles.noteLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              📄 {note.title}
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  const handleCopy = (code: string, idx: number) => {
+    navigator.clipboard.writeText(code);
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 1200);
+  };
+
+  const renderBotMessage = (msg: Message, idx: number) => {
+    const parts = parseMessageWithCodeBlocks(msg.text);
+    return (
+      <div key={idx} className={styles.botMsg} aria-live="polite">
+        {parts.map((part, i) =>
+          part.type === 'code' ? (
+            <div className={styles.codeBlockWrapper} key={i}>
+              <button
+                className={styles.copyBtn}
+                onClick={() => handleCopy(part.content, i)}
+                aria-label="Copy code"
+                type="button"
+              >
+                {copiedIdx === i ? 'Copied!' : 'Copy'}
+              </button>
+              <pre className={styles.codeBlock}>
+                <code>{part.content}</code>
+              </pre>
+            </div>
+          ) : (
+            <span key={i}>{part.content}</span>
+          )
+        )}
+        {msg.notes && msg.notes.length > 0 && (
+          <div className={styles.noteLinks}>
+            {msg.notes.map((note) => (
+              <a
+                key={note.id}
+                href={`/#note-${note.id}`}
+                className={styles.noteLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                📄 {note.title}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <>
