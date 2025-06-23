@@ -22,6 +22,7 @@ import styles from './app.module.css';
 import SidebarDrawer from './common/components/SidebarDrawer';
 import { useState } from 'react';
 import { Icon } from './common/components';
+import { ChatWidget } from './features/chat';
 
 const NotesApp = observer(() => {
   const store = useMemo(() => new NotesStore(new AuditStore()), []);
@@ -86,6 +87,7 @@ const NotesApp = observer(() => {
           </div>
         </div>
       </div>
+      <ChatWidget />
     </div>
   );
 });
