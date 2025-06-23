@@ -139,4 +139,27 @@
     margin: 0 1vw 2vw 0;
     border-radius: 12px 12px 0 0;
   }
+}
+.noteLinks {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.noteLink {
+  color: var(--notes-blue-5);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0.15rem 0.25rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-block;
+}
+.noteLink:hover, .noteLink:focus {
+  background: var(--notes-blue-2);
+  color: var(--notes-blue-6);
+  outline: none;
 } 

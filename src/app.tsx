@@ -22,7 +22,7 @@ import styles from './app.module.css';
 import SidebarDrawer from './common/components/SidebarDrawer';
 import { useState } from 'react';
 import { Icon } from './common/components';
-import { ChatWidget } from './features/chat';
+import { ChatWidget } from './features/chat/components';
 
 const NotesApp = observer(() => {
   const store = useMemo(() => new NotesStore(new AuditStore()), []);

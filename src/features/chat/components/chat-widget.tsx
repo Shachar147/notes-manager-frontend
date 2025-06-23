@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './chat-widget.module.css';
+import { chatApiService, ChatNoteRef } from '../services/chat-api.service';
 
 interface Message {
   sender: 'user' | 'bot';
   text: string;
+  notes?: ChatNoteRef[];
 }
 
 const initialMessages: Message[] = [
@@ -31,15 +33,47 @@ const ChatWidget: React.FC = () => {
     setInput('');
     setLoading(true);
     setError(null);
-    // Mock API call
-    setTimeout(() => {
+    try {
+      const res = await chatApiService.chat(input);
       setMessages((msgs) => [
         ...msgs,
-        { sender: 'bot', text: 'This is a mock response. (API integration coming soon!)' }
+        {
+          sender: 'bot',
+          text: res.data.answer,
+          notes: res.data.notes,
+        },
       ]);
+    } catch (err: any) {
+      setError(
+        err?.response?.data?.error ||
+        err?.message ||
+        'Sorry, something went wrong. Please try again.'
+      );
+    } finally {
       setLoading(false);
-    }, 1200);
+    }
   };
+
+  const renderBotMessage = (msg: Message, idx: number) => (
+    <div key={idx} className={styles.botMsg} aria-live="polite">
+      <div>{msg.text}</div>
+      {msg.notes && msg.notes.length > 0 && (
+        <div className={styles.noteLinks}>
+          {msg.notes.map((note) => (
+            <a
+              key={note.id}
+              href={`/notes/${note.id}`}
+              className={styles.noteLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📄 {note.title}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <>
@@ -66,17 +100,15 @@ const ChatWidget: React.FC = () => {
               </button>
             </header>
             <div className={styles.conversation} ref={conversationRef}>
-              {messages.map((msg, idx) => (
-                <div
-                  key={idx}
-                  className={
-                    msg.sender === 'user' ? styles.userMsg : styles.botMsg
-                  }
-                  aria-live="polite"
-                >
-                  {msg.text}
-                </div>
-              ))}
+              {messages.map((msg, idx) =>
+                msg.sender === 'user' ? (
+                  <div key={idx} className={styles.userMsg} aria-live="polite">
+                    {msg.text}
+                  </div>
+                ) : (
+                  renderBotMessage(msg, idx)
+                )
+              )}
               {loading && <div className={styles.loading}>Thinking…</div>}
               {error && <div className={styles.error}>{error}</div>}
             </div>
