@@ -110,7 +110,7 @@ const ChatWidget: React.FC = () => {
                 key={note.id}
                 href={`/#note-${note.id}`}
                 className={styles.noteLink}
-                target="_blank"
+                // target="_blank"
                 rel="noopener noreferrer"
               >
                 📄 {note.title}
