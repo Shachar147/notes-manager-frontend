@@ -115,9 +115,9 @@ Upgrade the notes-manager app to allow users to search and retrieve notes using 
 - [x] **Frontend - Implement chatbot window UI (opens on icon click, closes on outside click or X)**
 - [x] **Frontend - Add input box for user question and submit button**
 - [x] **Frontend - Display AI response: short answer and links to relevant notes**
-- [ ] **Frontend - Link to note detail page from chat response**
+- [x] **Frontend - Link to note detail page from chat response**
 - [x] **Frontend - Show loading indicator while waiting for response**
-- [ ] **Frontend - Add error handling for failed chat requests**
+- [x] **Frontend - Add error handling for failed chat requests**
 - [x] **Frontend - Display chat as conversation: different colors for user and bot, profile images for each**
 - [x] **Frontend - Consider using a React chat UI framework/component (e.g., react-chat-ui, react-chatbot-kit, BotUI, or custom)**
 - [x] **Frontend - Ensure responsive and accessible UI**
