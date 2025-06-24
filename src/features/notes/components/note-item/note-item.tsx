@@ -34,7 +34,10 @@ function NoteItem({
       key={isSelected}
       button
       selected={isSelected}
-      onClick={() => onClick(note.id)}
+      onClick={() => {
+        onClick(note.id);
+        window.location.hash = `note-${note.id}`;
+      }}
       className={isSelected ? styles.listItemSelected : styles.listItem}
       secondaryAction={
         <div className="flex-row gap-4">

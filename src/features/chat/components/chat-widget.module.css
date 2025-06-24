@@ -1,0 +1,199 @@
+.fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--notes-blue-5);
+  color: var(--notes-white);
+  border: none;
+  box-shadow: var(--notes-box-shadow-3);
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.fab:hover, .fab:focus {
+  background: var(--notes-blue-6);
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--notes-overlay-bg);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.chatWindow {
+  background: var(--notes-white);
+  border-radius: 12px 12px 0 0;
+  box-shadow: var(--notes-box-shadow-4);
+  width: 350px;
+  max-width: 95vw;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem 2rem 0;
+  overflow: hidden;
+}
+.header {
+  background: var(--notes-blue-5);
+  color: var(--notes-white);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--notes-white);
+  cursor: pointer;
+  padding: 0 0.5rem;
+  line-height: 1;
+}
+.conversation {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background: var(--notes-gray-1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.userMsg {
+  align-self: flex-end;
+  background: var(--notes-blue-5);
+  color: var(--notes-white);
+  padding: 0.5rem 1rem;
+  border-radius: 16px 16px 4px 16px;
+  max-width: 80%;
+  word-break: break-word;
+  box-shadow: var(--notes-box-shadow-1);
+}
+.botMsg {
+  align-self: flex-start;
+  background: var(--notes-blue-1);
+  color: var(--notes-black);
+  padding: 0.5rem 1rem;
+  border-radius: 16px 16px 16px 4px;
+  max-width: 80%;
+  word-break: break-word;
+  box-shadow: var(--notes-box-shadow-1);
+}
+.loading {
+  color: var(--notes-gray-5);
+  font-style: italic;
+  text-align: center;
+}
+.error {
+  color: var(--notes-red-6);
+  background: var(--notes-red-1);
+  border: 1px solid var(--notes-red-5);
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+.inputArea {
+  display: flex;
+  border-top: 1px solid var(--notes-gray-3);
+  padding: 0.5rem;
+  background: var(--notes-gray-1);
+}
+.input {
+  flex: 1;
+  border: 1px solid var(--notes-gray-3);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  outline: none;
+  margin-right: 0.5rem;
+  transition: border 0.2s;
+  color: var(--notes-black);
+  background: var(--notes-white);
+}
+.input:focus {
+  border: 1.5px solid var(--notes-blue-5);
+}
+.sendBtn {
+  background: var(--notes-blue-5);
+  color: var(--notes-white);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sendBtn:disabled {
+  background: var(--notes-gray-4);
+  cursor: not-allowed;
+}
+@media (max-width: 500px) {
+  .chatWindow {
+    width: 98vw;
+    margin: 0 1vw 2vw 0;
+    border-radius: 12px 12px 0 0;
+  }
+}
+.noteLinks {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.noteLink {
+  color: var(--notes-blue-5);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0.15rem 0.25rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-block;
+}
+.noteLink:hover, .noteLink:focus {
+  background: var(--notes-blue-2);
+  color: var(--notes-blue-6);
+  outline: none;
+}
+.codeBlockWrapper {
+  position: relative;
+  margin: 0.5rem 0;
+}
+.codeBlock {
+  background: var(--notes-gray-2);
+  border: 1px solid var(--notes-gray-4);
+  color: var(--notes-black);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+  font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  overflow-x: auto;
+  white-space: pre;
+  box-shadow: var(--notes-box-shadow-1);
+}
+.copyBtn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  background: var(--notes-blue-1);
+  color: var(--notes-blue-6);
+  border: 1px solid var(--notes-blue-3);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  z-index: 2;
+  transition: background 0.15s, color 0.15s;
+}
+.copyBtn:hover, .copyBtn:focus {
+  background: var(--notes-blue-2);
+  color: var(--notes-blue-5);
+  outline: none;
+} 

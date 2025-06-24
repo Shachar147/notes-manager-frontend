@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,11 +22,26 @@ import styles from './app.module.css';
 import SidebarDrawer from './common/components/SidebarDrawer';
 import { useState } from 'react';
 import { Icon } from './common/components';
+import { ChatWidget } from './features/chat/components';
 
 const NotesApp = observer(() => {
   const store = useMemo(() => new NotesStore(new AuditStore()), []);
   const { logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Hash-based note selection
+  useEffect(() => {
+    function selectNoteFromHash() {
+      const hash = window.location.hash;
+      const match = hash.match(/^#note-(.+)$/);
+      if (match && match[1]) {
+        store.setSelectedNoteId(match[1]);
+      }
+    }
+    selectNoteFromHash();
+    window.addEventListener('hashchange', selectNoteFromHash);
+    return () => window.removeEventListener('hashchange', selectNoteFromHash);
+  }, [store]);
 
   return (
     <div className={styles.appContainer}>
@@ -86,6 +101,7 @@ const NotesApp = observer(() => {
           </div>
         </div>
       </div>
+      <ChatWidget />
     </div>
   );
 });
