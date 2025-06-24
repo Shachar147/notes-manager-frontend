@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './chat-widget.module.css';
 import { chatApiService, ChatNoteRef } from '../services/chat-api.service';
-import { getClasses } from '../../../utils/class-utils';
 import Icon from '../../../common/components/icon/icon';
 
 interface Message {
