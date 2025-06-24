@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './chat-widget.module.css';
 import { chatApiService, ChatNoteRef } from '../services/chat-api.service';
+import { getClasses } from '../../../utils/class-utils';
+import Icon from '../../../common/components/icon/icon';
 
 interface Message {
   sender: 'user' | 'bot';
@@ -31,7 +33,7 @@ function parseMessageWithCodeBlocks(text: string) {
   return parts;
 }
 
-const ChatWidget: React.FC = () => {
+function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState('');
@@ -46,7 +48,7 @@ const ChatWidget: React.FC = () => {
     }
   }, [messages, open]);
 
-  const handleSend = async (e?: React.FormEvent) => {
+  async function handleSend(e?: React.FormEvent) {
     e?.preventDefault();
     if (!input.trim()) return;
     setMessages((msgs) => [...msgs, { sender: 'user', text: input }]);
@@ -72,15 +74,15 @@ const ChatWidget: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  const handleCopy = (code: string, idx: number) => {
+  function handleCopy(code: string, idx: number) {
     navigator.clipboard.writeText(code);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 1200);
-  };
+  }
 
-  const renderBotMessage = (msg: Message, idx: number) => {
+  function renderBotMessage(msg: Message, idx: number) {
     const parts = parseMessageWithCodeBlocks(msg.text);
     return (
       <div key={idx} className={styles.botMsg} aria-live="polite">
@@ -120,7 +122,7 @@ const ChatWidget: React.FC = () => {
         )}
       </div>
     );
-  };
+  }
 
   return (
     <>
@@ -130,7 +132,7 @@ const ChatWidget: React.FC = () => {
           aria-label="Open chat"
           onClick={() => setOpen(true)}
         >
-          💬
+          <Icon name="comment" size="lg" />
         </button>
       )}
       {open && (
@@ -143,7 +145,7 @@ const ChatWidget: React.FC = () => {
                 aria-label="Close chat"
                 onClick={() => setOpen(false)}
               >
-                ×
+                <Icon name="times" size="lg" />
               </button>
             </header>
             <div className={styles.conversation} ref={conversationRef}>
@@ -178,6 +180,6 @@ const ChatWidget: React.FC = () => {
       )}
     </>
   );
-};
+}
 
 export default ChatWidget; 
