@@ -23,6 +23,7 @@ import SidebarDrawer from './common/components/SidebarDrawer';
 import { useState } from 'react';
 import { Icon } from './common/components';
 import { ChatWidget } from './features/chat/components';
+import ChatbotStatisticsPage from './pages/chatbot-statistics';
 
 const NotesApp = observer(() => {
   const store = useMemo(() => new NotesStore(new AuditStore()), []);
@@ -69,8 +70,27 @@ const NotesApp = observer(() => {
               href="/doc/foundation"
               target="_blank"
               rel="noopener noreferrer"
+              className={styles.hideOnMobile}
             >
               Dev Docs
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              component="a"
+              href="/chatbot-statistics"
+              className={styles.hideOnMobile}
+            >
+              Chatbot Statistics
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              component="a"
+              href="/chatbot-statistics"
+              className={styles.showOnMobile}
+            >
+              Stats
             </Button>
             <Button
               variant="contained"
@@ -129,6 +149,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/chatbot-statistics" element={<ProtectedRoute><ChatbotStatisticsPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

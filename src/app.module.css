@@ -163,3 +163,21 @@
     box-sizing: border-box;
   }
 }
+
+.hideOnMobile {
+  display: initial;
+}
+@media (max-width: 899px) {
+  .hideOnMobile {
+    display: none !important;
+  }
+}
+
+.showOnMobile {
+  display: none;
+}
+@media (max-width: 899px) {
+  .showOnMobile {
+    display: inline-block !important;
+  }
+}
