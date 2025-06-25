@@ -6,7 +6,6 @@ import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import Image from '@tiptap/extension-image';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { common, createLowlight } from 'lowlight';
 import NotesStore from '../../stores/notes-store';
 import { Text } from '../../../../common/components';
@@ -23,6 +22,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import { IconButton, Tooltip } from '@mui/material';
 import styles from './note-editor.module.scss';
 import { useTheme } from '@mui/material/styles';
+import CodeBlock from '@tiptap/extension-code-block';
 
 interface NoteEditorProps {
   store: NotesStore;
@@ -36,15 +36,13 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   const [title, setTitle] = React.useState(selectedNote?.title || '');
 
-  const lowlight = createLowlight(common);
-
   const editor = useEditor({
     extensions: [
       StarterKit,
       Heading.configure({ levels: [1, 2, 3] }),
       HorizontalRule,
       Image,
-      CodeBlockLowlight.configure({ lowlight }),
+      CodeBlock,
       BubbleMenu,
     ],
     content: selectedNote?.content || '',
