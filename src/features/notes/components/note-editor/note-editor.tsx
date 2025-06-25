@@ -6,7 +6,6 @@ import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import Image from '@tiptap/extension-image';
-import { common, createLowlight } from 'lowlight';
 import NotesStore from '../../stores/notes-store';
 import { Text } from '../../../../common/components';
 import { BubbleMenu } from '@tiptap/extension-bubble-menu';
@@ -22,6 +21,20 @@ import ImageIcon from '@mui/icons-material/Image';
 import { IconButton, Tooltip } from '@mui/material';
 import styles from './note-editor.module.scss';
 import { useTheme } from '@mui/material/styles';
+import Code from '@tiptap/extension-code';
+import Blockquote from '@tiptap/extension-blockquote';
+import Link from '@tiptap/extension-link';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import Underline from '@tiptap/extension-underline';
+import Strike from '@tiptap/extension-strike';
+import Highlight from '@tiptap/extension-highlight';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import HardBreak from '@tiptap/extension-hard-break';
+import { Markdown } from 'tiptap-markdown';
 import CodeBlock from '@tiptap/extension-code-block';
 
 interface NoteEditorProps {
@@ -42,8 +55,23 @@ function NoteEditor({ store }: NoteEditorProps) {
       Heading.configure({ levels: [1, 2, 3] }),
       HorizontalRule,
       Image,
+      Code,
+      Blockquote,
+      Link,
+      Table.configure({ resizable: true }),
+      TableRow,
+      TableCell,
+      TableHeader,
+      Underline,
+      Strike,
+      Highlight,
+      TaskList,
+      TaskItem,
+      HardBreak,
       CodeBlock,
+      // CodeBlockLowlight.configure({ lowlight }),
       BubbleMenu,
+      Markdown,
     ],
     content: selectedNote?.content || '',
     editable: true,
