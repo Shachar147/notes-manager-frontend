@@ -225,7 +225,7 @@ function NoteEditor({ store }: NoteEditorProps) {
           </Box>
         </TiptapBubbleMenu>
       )}
-      <EditorContent editor={editor} className={styles['tiptap-editor']} />
+      <EditorContent editor={editor} className={styles['tiptap-editor']} spellCheck={false} />
       <Button
         variant="contained"
         color="primary"
