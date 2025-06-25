@@ -75,6 +75,35 @@ function NoteEditor({ store }: NoteEditorProps) {
     ],
     content: selectedNote?.content || '',
     editable: true,
+    editorProps: {
+      handlePaste(view, event) {
+        const items = event.clipboardData?.items;
+        if (items) {
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (item.type.indexOf('image') !== -1) {
+              const file = item.getAsFile();
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = readerEvent => {
+                  const src = readerEvent.target?.result;
+                  if (typeof src === 'string') {
+                    view.dispatch(
+                      view.state.tr.replaceSelectionWith(
+                        view.state.schema.nodes.image.create({ src })
+                      )
+                    );
+                  }
+                };
+                reader.readAsDataURL(file);
+                return true; // Prevent default paste
+              }
+            }
+          }
+        }
+        return false; // Let other handlers run
+      },
+    },
   });
 
   useEffect(() => {
