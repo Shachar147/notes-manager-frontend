@@ -1,7 +1,8 @@
-import React, { useState, useMemo, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useMemo, forwardRef, useImperativeHandle, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, IconButton, Tooltip } from '@mui/material';
+import styles from './collapsible-preview.module.scss';
 
 interface CollapsiblePreviewProps {
   html: string;
@@ -76,25 +77,18 @@ function RenderSection({ section, openMap, onToggle }: { section: any, openMap: 
   }
 
   return (
-    <Box key={section.key} mb={1}>
+    <Box key={section.key} className={styles.section}>
       <Box
-        display="flex"
-        alignItems="center"
-        style={{ cursor: 'pointer', position: 'relative' }}
+        className={styles.headingRow}
         onMouseEnter={() => setHeadingHovered(true)}
         onMouseLeave={() => setHeadingHovered(false)}
         onBlur={() => setHeadingHovered(false)}
         onClick={() => onToggle(section.key)}
       >
         <span
-          style={{
-            position: 'absolute',
-            insetInlineStart: -35,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 1,
-            opacity: showIcon ? '1' : '0',
-          }}
+          className={
+            styles.iconPrefix + ' ' + (showIcon ? styles.iconPrefixVisible : styles.iconPrefixHidden)
+          }
           onMouseEnter={e => { e.stopPropagation(); setIconHovered(true); }}
           onMouseLeave={e => { e.stopPropagation(); setIconHovered(false); }}
           onBlur={() => setIconHovered(false)}
@@ -105,7 +99,7 @@ function RenderSection({ section, openMap, onToggle }: { section: any, openMap: 
             </IconButton>
           </Tooltip>
         </span>
-        <HeadingTag style={{ margin: 0 }}>{headingText}</HeadingTag>
+        <HeadingTag className={styles.heading}>{headingText}</HeadingTag>
       </Box>
       {open && (
         <Box>
@@ -167,7 +161,7 @@ const CollapsiblePreview = forwardRef(function CollapsiblePreview(
   };
 
   // Expand all by default when allKeys changes
-  React.useEffect(() => {
+  useEffect(() => {
     const newMap: Record<string, boolean> = {};
     allKeys.forEach(key => { newMap[key] = true; });
     setOpenMap(newMap);
@@ -187,7 +181,7 @@ const CollapsiblePreview = forwardRef(function CollapsiblePreview(
   }), [allKeys]);
 
   return (
-    <Box sx={{ paddingInlineStart: '16px' }}>
+    <Box className={styles.root}>
       {sections.map((section) => (
         <RenderSection key={section.key} section={section} openMap={openMap} onToggle={handleToggle} />
       ))}
