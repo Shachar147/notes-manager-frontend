@@ -69,7 +69,6 @@ function NoteEditor({ store }: NoteEditorProps) {
       TaskItem,
       HardBreak,
       CodeBlock,
-      // CodeBlockLowlight.configure({ lowlight }),
       BubbleMenu,
       Markdown,
     ],
@@ -108,7 +107,12 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   useEffect(() => {
     if (editor && selectedNote) {
-      editor.commands.setContent(selectedNote.content || '');
+      // Try to use setContent with source: 'markdown' if supported
+      try {
+        editor.commands.setContent(selectedNote.content || '', { source: 'markdown' });
+      } catch {
+        editor.commands.setContent(selectedNote.content || '');
+      }
     }
     setTitle(selectedNote?.title || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,7 +122,7 @@ function NoteEditor({ store }: NoteEditorProps) {
     if (selectedNote && editor) {
       await store.updateNote(selectedNote.id, {
         title,
-        content: editor.getHTML(),
+        content: editor.storage.markdown.getMarkdown(),
       });
     }
   };
