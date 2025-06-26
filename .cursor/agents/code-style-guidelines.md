@@ -1,6 +1,8 @@
 # Code Style Guidelines
 
-## 🔁 1. Use `useEffect` Directly — Not `React.useEffect`
+## Imports
+
+### 1. Use `useEffect` Directly — Not `React.useEffect`
 
 ✅ **Good**
 ```tsx
@@ -18,7 +20,9 @@ React.useEffect(() => {
 }, []);
 ```
 
-## 🎨 2. No Inline Styles — Use CSS Modules Instead
+## CSS/SCSS
+
+### 2. No Inline Styles — Use CSS Modules Instead
 
 ✅ **Good**
 ```tsx
@@ -33,7 +37,7 @@ return <div style={{ padding: '10px', color: 'red' }}>Hello</div>;
 
 ```
 
-## 🎨 3. No Hex or rgba() in Components — Use Design System Variables
+### 3. No Hex or rgba() in Components — Use Design System Variables
 
 ✅ **Good**
 ```
@@ -65,7 +69,74 @@ OR
 <div style={{ backgroundColor: 'rgba(0, 123, 255, 0.7)' }}>Styled</div>
 ```
 
-## 🎨 4. Each component should be written in lower case and have its' own folder
+### 4. Use Logical CSS Properties for Spacing and Positioning
+
+Use logical properties like margin-inline-start, margin-inline-end, padding-inline-start, padding-inline-end, inset-inline-start, and inset-inline-end instead of left/right, margin-left/margin-right, padding-left/padding-right, etc. This ensures better RTL support and consistency.
+
+✅ **Good**
+```scss
+.headingIcon {
+  margin-inline-end: 2px;
+}
+.headingText {
+  margin-inline-start: 0px;
+  margin-inline-end: 2px;
+}
+.menuRoot {
+  padding-inline-start: 8px;
+  padding-inline-end: 8px;
+}
+.button {
+  inset-inline-end: 0;
+}
+```
+
+❌ Bad
+```scss
+.headingIcon {
+  margin-right: 2px;
+}
+.headingText {
+  margin-left: 0px;
+  margin-right: 2px;
+}
+.menuRoot {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.button {
+  right: 0;
+}
+```
+
+### 5. Never use :global in CSS Modules
+
+Never use :global in CSS Modules. It defeats the purpose of CSS Modules and can cause style conflicts across the app.
+
+✅ **Good**
+```scss
+// notes-editor-menu.module.scss
+.iconButton {
+  color: var(--notes-white);
+}
+```
+```tsx
+// notes-editor-menu.tsx
+<IconButton className={getClasses(styles.iconButton)}>
+  ...
+</IconButton>
+```
+
+❌ Bad
+```scss
+:global(.MuiIconButton-root) {
+  color: var(--notes-white);
+}
+```
+
+## Components
+
+### 6. Each component should be written in lower case and have its' own folder
 
 ✅ **Good**
 ```
@@ -105,9 +176,9 @@ src
 .......... OtherComponent.module.css
 ```
 
-## 🎨 5. Components should be functional instead of consts, also do not use React.FC
+### 7. Components should be functional instead of consts, also do not use React.FC
 
-## 6. Do not concat classes, use `getClasses`
+### 8. Do not concat classes, use `getClasses`
 
 ✅ **Good**
 ```
@@ -130,7 +201,7 @@ className={
 }
 ```
 
-## 7. Do not use React.Fragment, use `<>...</>` instead - unless you need to use params like `key`
+### 9. Do not use React.Fragment, use `<>...</>` instead - unless you need to use params like `key`
 
 ✅ **Good**
 ```tsx
@@ -154,4 +225,32 @@ return <React.Fragment>
   <div>Item 1</div>
   <div>Item 2</div>
 </React.Fragment>;
+```
+
+## Typography
+
+### 10. Use Design System Classes for Typography in Components
+
+Use only the classes from design-system.scss (e.g., .notes-headline-6, .notes-body) for typography. Apply them in your component using getClasses in the className prop. Do not use @extend in your CSS modules or set font-size/font-weight directly.
+
+✅ **Good**
+```tsx
+<MyComponent className={getClasses('notes-headline-6', styles.somethingElse)}>
+  ...
+</MyComponent>
+<Text className={getClasses('notes-body', styles.customText)}>
+  ...
+</Text>
+```
+
+❌ Bad
+```scss
+.headingText {
+  font-size: 12px;
+  font-weight: 700;
+}
+.bodyText {
+  font-size: 1rem;
+  font-weight: 400;
+}
 ```
