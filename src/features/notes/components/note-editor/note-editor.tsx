@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Box, TextField } from '@mui/material';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -88,6 +88,7 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   const [title, setTitle] = useState(selectedNote?.title || '');
   const [isEditMode, setIsEditMode] = useState(false);
+  const collapsiblePreviewRef = useRef();
 
   const editor = useEditor({
     extensions: [
@@ -185,15 +186,22 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   return (
     <Box p={4} display="flex" flexDirection="column" maxWidth="100%" style={{ position: 'relative' }}>
-      {/* Toggle Button */}
-      <Button
-        variant="outlined"
-        size="small"
-        style={{ position: 'absolute', top: 16, right: 32, zIndex: 2 }}
-        onClick={() => setIsEditMode((v) => !v)}
-      >
-        {isEditMode ? 'Preview' : 'Edit'}
-      </Button>
+      {/* Toggle Button and Expand/Collapse All */}
+      <Box style={{ position: 'absolute', top: 16, right: 32, zIndex: 2, display: 'flex', gap: 8 }}>
+        {!isEditMode && (
+          <>
+            <Button variant="outlined" size="small" onClick={() => collapsiblePreviewRef.current?.expandAll?.()}>Expand All</Button>
+            <Button variant="outlined" size="small" onClick={() => collapsiblePreviewRef.current?.collapseAll?.()}>Collapse All</Button>
+          </>
+        )}
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => setIsEditMode((v) => !v)}
+        >
+          {isEditMode ? 'Preview' : 'Edit'}
+        </Button>
+      </Box>
       <div style={{ height: 16 }} /> {/* Add gap below the button */}
       <TextField
           label="Title"
@@ -329,7 +337,7 @@ function NoteEditor({ store }: NoteEditorProps) {
             spellCheck={false}
           />
         ) : (
-          <CollapsiblePreview html={editor.getHTML()} />
+          <CollapsiblePreview ref={collapsiblePreviewRef} html={editor.getHTML()} />
         )
       )}
 
