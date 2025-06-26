@@ -1,0 +1,29 @@
+.root {
+  padding-inline-start: 16px;
+}
+.section {
+  margin-bottom: 8px;
+}
+.headingRow {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+.iconPrefix {
+  position: absolute;
+  inset-inline-start: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: opacity 0.2s;
+}
+.iconPrefixVisible {
+  opacity: 1;
+}
+.iconPrefixHidden {
+  opacity: 0;
+}
+.heading {
+  margin: 0;
+} 
