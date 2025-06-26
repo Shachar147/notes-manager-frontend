@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { useState, useRef } from 'react';
+import { IconButton, Tooltip } from '@mui/material';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import StrikethroughSIcon from '@mui/icons-material/StrikethroughS';
@@ -9,16 +9,43 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import TitleIcon from '@mui/icons-material/Title';
 import styles from './notes-editor-menu.module.scss';
 import { BubbleMenu } from '@tiptap/react';
 import { getClasses } from '../../../../../utils/class-utils';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
 
 interface NotesEditorMenuProps {
   editor: any;
 }
 
-const NotesEditorMenu: React.FC<NotesEditorMenuProps> = ({ editor }) => {
+function NotesEditorMenu({ editor }: NotesEditorMenuProps) {
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [pickerDirection, setPickerDirection] = useState<'up' | 'down'>('down');
+  const emojiButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleEmojiSelect = (
+    emojiData: { emoji: string },
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    editor.chain().focus().insertContent(emojiData.emoji).run();
+    setShowEmojiPicker(false);
+  };
+
+  const handleOpenEmojiPicker = () => {
+    if (emojiButtonRef.current) {
+      const rect = emojiButtonRef.current.getBoundingClientRect();
+      const pickerHeight = 400;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      if (spaceBelow < pickerHeight && spaceAbove > pickerHeight) {
+        setPickerDirection('up');
+      } else {
+        setPickerDirection('down');
+      }
+    }
+    setShowEmojiPicker((v) => !v);
+  };
+
   if (!editor) return null;
 
   return (
@@ -59,7 +86,34 @@ const NotesEditorMenu: React.FC<NotesEditorMenuProps> = ({ editor }) => {
         const url = window.prompt('Enter link URL');
         if (url) editor.chain().focus().setLink({ href: url }).run();
       }}><LinkIcon fontSize="small" /></IconButton></Tooltip>
-      <Tooltip title="Emoji"><IconButton size="small" onClick={() => window.alert('Emoji picker not implemented yet!')}><EmojiEmotionsIcon fontSize="small" /></IconButton></Tooltip>
+      <Tooltip title="Emoji" placement="top">
+        <IconButton
+          ref={emojiButtonRef}
+          size="small"
+          onClick={handleOpenEmojiPicker}
+        >
+          <EmojiEmotionsIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+      {showEmojiPicker && (
+        <div
+          style={{
+            position: 'absolute',
+            zIndex: 2000,
+            left: 0,
+            ...(pickerDirection === 'down'
+              ? { top: 40 }
+              : { bottom: 40 }),
+          }}
+        >
+          <EmojiPicker
+            theme={Theme.DARK}
+            onEmojiClick={handleEmojiSelect}
+            width={350}
+            height={400}
+          />
+        </div>
+      )}
       <span className={styles.divider} />
       <Tooltip title="Checklist"><IconButton size="small" onClick={() => editor.chain().focus().toggleTaskList().run()}><CheckBoxIcon fontSize="small" /></IconButton></Tooltip>
       <Tooltip title="Bulleted List"><IconButton size="small" onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon fontSize="small" /></IconButton></Tooltip>

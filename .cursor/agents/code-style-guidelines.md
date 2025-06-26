@@ -254,3 +254,25 @@ Use only the classes from design-system.scss (e.g., .notes-headline-6, .notes-bo
   font-weight: 400;
 }
 ```
+
+### 11. Use Function Declarations for Components, Not React.FC or const
+
+Always define components using function declarations, not as const or with React.FC.
+
+✅ **Good**
+```tsx
+function MyComponent(props: MyComponentProps) {
+  return <div>...</div>;
+}
+```
+
+❌ Bad
+```tsx
+const MyComponent: React.FC<MyComponentProps> = (props) => {
+  return <div>...</div>;
+}
+
+const MyComponent = (props) => {
+  return <div>...</div>;
+}
+```
