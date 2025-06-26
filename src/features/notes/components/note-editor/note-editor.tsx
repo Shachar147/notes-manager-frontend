@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Box, TextField } from '@mui/material';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -6,8 +6,6 @@ import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import Image from '@tiptap/extension-image';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { common, createLowlight } from 'lowlight';
 import NotesStore from '../../stores/notes-store';
 import { Text } from '../../../../common/components';
 import { BubbleMenu } from '@tiptap/extension-bubble-menu';
@@ -23,10 +21,63 @@ import ImageIcon from '@mui/icons-material/Image';
 import { IconButton, Tooltip } from '@mui/material';
 import styles from './note-editor.module.scss';
 import { useTheme } from '@mui/material/styles';
+import Code from '@tiptap/extension-code';
+import Blockquote from '@tiptap/extension-blockquote';
+import Link from '@tiptap/extension-link';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import Underline from '@tiptap/extension-underline';
+import Strike from '@tiptap/extension-strike';
+import Highlight from '@tiptap/extension-highlight';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import HardBreak from '@tiptap/extension-hard-break';
+import { Markdown } from 'tiptap-markdown';
+import CodeBlock from '@tiptap/extension-code-block';
+import { InputRule, inputRules } from 'prosemirror-inputrules';
+import { Extension } from '@tiptap/core';
+import { getClasses } from '../../../../utils/class-utils';
 
 interface NoteEditorProps {
   store: NotesStore;
 }
+
+// Custom input rule extension for replacing '->' with '→' and '<-' with '←'
+const ArrowInputRule = Extension.create({
+  name: 'arrowInputRule',
+  addProseMirrorPlugins() {
+    return [
+      inputRules({
+        rules: [
+          // Short right arrow
+          new InputRule(/->$/, (state, match, start, end) => {
+            if (!match) return null;
+            return state.tr.insertText('→', start, end);
+          }),
+          // Short left arrow
+          new InputRule(/<-$/, (state, match, start, end) => {
+            if (!match) return null;
+            return state.tr.insertText('←', start, end);
+          }),
+          // Long right arrow (2 or more dashes)
+          new InputRule(/-+>$/, (state, match, start, end) => {
+            if (!match) return null;
+            // If 2 or more dashes, use long arrow
+            return state.tr.insertText('⟶', start, end);
+          }),
+          // Long left arrow (2 or more dashes)
+          new InputRule(/<-+$/, (state, match, start, end) => {
+            if (!match) return null;
+            // If 2 or more dashes, use long arrow
+            return state.tr.insertText('⟵', start, end);
+          }),
+        ],
+      }),
+    ];
+  },
+});
 
 function NoteEditor({ store }: NoteEditorProps) {
   const theme = useTheme();
@@ -34,9 +85,8 @@ function NoteEditor({ store }: NoteEditorProps) {
     note => note.id === store.selectedNoteId
   );
 
-  const [title, setTitle] = React.useState(selectedNote?.title || '');
-
-  const lowlight = createLowlight(common);
+  const [title, setTitle] = useState(selectedNote?.title || '');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -44,26 +94,82 @@ function NoteEditor({ store }: NoteEditorProps) {
       Heading.configure({ levels: [1, 2, 3] }),
       HorizontalRule,
       Image,
-      CodeBlockLowlight.configure({ lowlight }),
+      Code,
+      Blockquote,
+      Link,
+      Table.configure({ resizable: true }),
+      TableRow,
+      TableCell,
+      TableHeader,
+      Underline,
+      Strike,
+      Highlight,
+      TaskList,
+      TaskItem,
+      HardBreak,
+      CodeBlock,
       BubbleMenu,
+      Markdown,
+      ArrowInputRule,
     ],
     content: selectedNote?.content || '',
-    editable: true,
+    editable: isEditMode,
+    editorProps: {
+      handlePaste(view, event) {
+        const items = event.clipboardData?.items;
+        if (items) {
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (item.type.indexOf('image') !== -1) {
+              const file = item.getAsFile();
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = readerEvent => {
+                  const src = readerEvent.target?.result;
+                  if (typeof src === 'string') {
+                    view.dispatch(
+                      view.state.tr.replaceSelectionWith(
+                        view.state.schema.nodes.image.create({ src })
+                      )
+                    );
+                  }
+                };
+                reader.readAsDataURL(file);
+                return true; // Prevent default paste
+              }
+            }
+          }
+        }
+        return false; // Let other handlers run
+      },
+    },
   });
 
   useEffect(() => {
     if (editor && selectedNote) {
-      editor.commands.setContent(selectedNote.content || '');
+      try {
+        editor.commands.setContent(selectedNote.content || '', { source: 'markdown' });
+      } catch {
+        editor.commands.setContent(selectedNote.content || '');
+      }
     }
     setTitle(selectedNote?.title || '');
+    setIsEditMode(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNote?.id]);
+
+  // Ensure editor is editable or read-only based on isEditMode
+  useEffect(() => {
+    if (editor) {
+      editor.setEditable(isEditMode);
+    }
+  }, [editor, isEditMode]);
 
   const handleSave = async () => {
     if (selectedNote && editor) {
       await store.updateNote(selectedNote.id, {
         title,
-        content: editor.getHTML(),
+        content: editor.storage.markdown.getMarkdown(),
       });
     }
   };
@@ -77,16 +183,31 @@ function NoteEditor({ store }: NoteEditorProps) {
   }
 
   return (
-    <Box p={4} display="flex" flexDirection="column" gap={2} maxWidth="100%">
-      <TextField
-        label="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
+    <Box p={4} display="flex" flexDirection="column" maxWidth="100%" style={{ position: 'relative' }}>
+      {/* Toggle Button */}
+      <Button
         variant="outlined"
-        fullWidth
-        margin="normal"
-        sx={{ mb: 2 }}
-      />
+        size="small"
+        style={{ position: 'absolute', top: 16, right: 32, zIndex: 2 }}
+        onClick={() => setIsEditMode((v) => !v)}
+      >
+        {isEditMode ? 'Preview' : 'Edit'}
+      </Button>
+      <div style={{ height: 16 }} /> {/* Add gap below the button */}
+      <TextField
+          label="Title"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          placeholder="Your Note Title"
+          sx={{ mb: 2 }}
+          style={{ fontWeight: 700 }}
+          className={getClasses(styles.titleClass, !isEditMode && 'display-none')}
+          disabled={!isEditMode}
+        />
+      <h1 className={getClasses("margin-bottom-16", "margin-inline-start-16", isEditMode && 'display-none')}>{title}</h1>
       {editor && (
         <TiptapBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
           <Box
@@ -199,16 +320,30 @@ function NoteEditor({ store }: NoteEditorProps) {
           </Box>
         </TiptapBubbleMenu>
       )}
-      <EditorContent editor={editor} className={styles['tiptap-editor']} />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSave}
-        disabled={store.isLoading}
-        sx={{ alignSelf: 'flex-start' }}
-      >
-        Save
-      </Button>
+      <EditorContent
+          editor={editor}
+          className={
+            isEditMode
+              ? styles['tiptap-editor']
+              : `${styles['tiptap-editor']} ${styles['tiptap-editor-preview']}`
+          }
+          spellCheck={false}
+        />
+
+      {isEditMode && (
+        <>
+              <div style={{ height: 16 }} /> {/* Add gap below the button */}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSave}
+          disabled={store.isLoading}
+          sx={{ alignSelf: 'flex-start' }}
+        >
+          Save
+        </Button>
+        </>
+      )}
     </Box>
   );
 }

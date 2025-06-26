@@ -29,6 +29,12 @@
   border: none;
   padding: 0;
   background: transparent;
+  color: var(--notes-black) !important;
+}
+
+.titleClass {
+  font-size: 34px;
+  font-weight: bold;
 }
 
 .tiptap-editor {
@@ -37,4 +43,10 @@
     border-bottom: 0;
     border-top: 1px solid var(--notes-gray-3);
   }
+}
+
+.tiptap-editor-preview {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }

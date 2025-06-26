@@ -1,7 +1,27 @@
 @import './design-system.scss';
 
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Reg.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Bol.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-RegIta.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'Lato', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -10,6 +30,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'Lato', sans-serif;
 }
 
 .loader-container {
@@ -59,4 +80,118 @@ body {
 
 input:-internal-autofill-selected {
   background: var(--notes-white) !important;
+}
+
+
+pre {
+  background: #f6f8fa;
+  color: var(--notes-black);
+  border-radius: 6px;
+  border: 1px solid #e1e4e8;
+  padding: 1em;
+  font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 12px;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+p code {
+  background: #f6f8fa;         /* very light gray */
+  border: 1px solid #e1e4e8;   /* light gray border */
+  color: #d72660;              /* pinkish/red text */
+
+  font-variant-ligatures: none;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: normal;
+  tab-size: 4;
+  border-radius: 3px;
+  padding: 2px 3px 1px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-family: Monaco, Menlo, Consolas, Courier New, monospace !important;
+}
+
+p {
+  font-size: 15px;
+}
+
+p strong {
+  user-select: text;
+  text-align: left;
+  width: 100%;
+  font-size: 15px;
+  line-height: 1.46668;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 34px;
+}
+
+h2 {
+  font-size: 18px;
+  line-height: 27px;
+}
+
+h3 {
+  font-size: 15px;
+  line-height: 22px;
+}
+
+h1, h2, h3 {
+  margin-bottom: 0 !important;
+}
+
+ol, ul {
+  margin-top: 4px !important;
+  padding-left: 8px !important;
+  margin-left: 8px !important;
+}
+
+li {
+  margin-bottom: 0.2em;
+  line-height: 1.6;
+}
+
+p {
+  margin-block: 8px !important;
+}
+
+/* Top-level ordered lists: numbers (default) */
+ol {
+  list-style-type: decimal;
+}
+
+/* Second-level ordered lists: lower-alpha (a, b, c, ...) */
+ol ol {
+  list-style-type: lower-alpha;
+}
+
+/* Third-level ordered lists: lower-roman (i, ii, iii, ...) */
+ol ol ol {
+  list-style-type: lower-roman;
+}
+
+/* You can keep nesting if you want more levels */
+
+.display-none {
+  display: none !important;
+}
+
+.margin-inline-start-16 {
+  margin-inline-start: 16px;
+}
+
+.margin-bottom-16,
+h1.margin-bottom-16 {
+  margin-bottom: 16px !important;
 }
