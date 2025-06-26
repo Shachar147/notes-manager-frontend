@@ -165,3 +165,20 @@ li {
 p {
   margin-block: 8px !important;
 }
+
+/* Top-level ordered lists: numbers (default) */
+ol {
+  list-style-type: decimal;
+}
+
+/* Second-level ordered lists: lower-alpha (a, b, c, ...) */
+ol ol {
+  list-style-type: lower-alpha;
+}
+
+/* Third-level ordered lists: lower-roman (i, ii, iii, ...) */
+ol ol ol {
+  list-style-type: lower-roman;
+}
+
+/* You can keep nesting if you want more levels */

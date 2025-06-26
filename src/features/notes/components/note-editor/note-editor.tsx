@@ -36,10 +36,47 @@ import TaskItem from '@tiptap/extension-task-item';
 import HardBreak from '@tiptap/extension-hard-break';
 import { Markdown } from 'tiptap-markdown';
 import CodeBlock from '@tiptap/extension-code-block';
+import { InputRule, inputRules } from 'prosemirror-inputrules';
+import { Extension } from '@tiptap/core';
 
 interface NoteEditorProps {
   store: NotesStore;
 }
+
+// Custom input rule extension for replacing '->' with '→' and '<-' with '←'
+const ArrowInputRule = Extension.create({
+  name: 'arrowInputRule',
+  addProseMirrorPlugins() {
+    return [
+      inputRules({
+        rules: [
+          // Short right arrow
+          new InputRule(/->$/, (state, match, start, end) => {
+            if (!match) return null;
+            return state.tr.insertText('→', start, end);
+          }),
+          // Short left arrow
+          new InputRule(/<-$/, (state, match, start, end) => {
+            if (!match) return null;
+            return state.tr.insertText('←', start, end);
+          }),
+          // Long right arrow (2 or more dashes)
+          new InputRule(/-+>$/, (state, match, start, end) => {
+            if (!match) return null;
+            // If 2 or more dashes, use long arrow
+            return state.tr.insertText('⟶', start, end);
+          }),
+          // Long left arrow (2 or more dashes)
+          new InputRule(/<-+$/, (state, match, start, end) => {
+            if (!match) return null;
+            // If 2 or more dashes, use long arrow
+            return state.tr.insertText('⟵', start, end);
+          }),
+        ],
+      }),
+    ];
+  },
+});
 
 function NoteEditor({ store }: NoteEditorProps) {
   const theme = useTheme();
@@ -71,6 +108,7 @@ function NoteEditor({ store }: NoteEditorProps) {
       CodeBlock,
       BubbleMenu,
       Markdown,
+      ArrowInputRule,
     ],
     content: selectedNote?.content || '',
     editable: true,
@@ -136,7 +174,7 @@ function NoteEditor({ store }: NoteEditorProps) {
   }
 
   return (
-    <Box p={4} display="flex" flexDirection="column" gap={2} maxWidth="100%">
+    <Box p={4} display="flex" flexDirection="column" maxWidth="100%">
       <TextField
         label="Title"
         value={title}
@@ -144,7 +182,12 @@ function NoteEditor({ store }: NoteEditorProps) {
         variant="outlined"
         fullWidth
         margin="normal"
+        placeholder="Your Note Title"
         sx={{ mb: 2 }}
+        style={{
+          fontWeight: 700
+        }}
+        className={styles.titleClass}
       />
       {editor && (
         <TiptapBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
