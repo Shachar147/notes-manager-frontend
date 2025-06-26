@@ -39,7 +39,7 @@ import CodeBlock from '@tiptap/extension-code-block';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { Extension } from '@tiptap/core';
 import { getClasses } from '../../../../utils/class-utils';
-import CollapsiblePreview from './collapsible-preview';
+import CollapsiblePreview from '../collapsible-preview/collapsible-preview';
 
 interface NoteEditorProps {
   store: NotesStore;
