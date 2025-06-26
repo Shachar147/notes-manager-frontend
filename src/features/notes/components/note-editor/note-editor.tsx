@@ -39,6 +39,7 @@ import CodeBlock from '@tiptap/extension-code-block';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { Extension } from '@tiptap/core';
 import { getClasses } from '../../../../utils/class-utils';
+import CollapsiblePreview from './collapsible-preview';
 
 interface NoteEditorProps {
   store: NotesStore;
@@ -320,15 +321,17 @@ function NoteEditor({ store }: NoteEditorProps) {
           </Box>
         </TiptapBubbleMenu>
       )}
-      <EditorContent
-          editor={editor}
-          className={
-            isEditMode
-              ? styles['tiptap-editor']
-              : `${styles['tiptap-editor']} ${styles['tiptap-editor-preview']}`
-          }
-          spellCheck={false}
-        />
+      {editor && (
+        isEditMode ? (
+          <EditorContent
+            editor={editor}
+            className={styles['tiptap-editor']}
+            spellCheck={false}
+          />
+        ) : (
+          <CollapsiblePreview html={editor.getHTML()} />
+        )
+      )}
 
       {isEditMode && (
         <>
