@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Box, TextField } from '@mui/material';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -84,7 +84,8 @@ function NoteEditor({ store }: NoteEditorProps) {
     note => note.id === store.selectedNoteId
   );
 
-  const [title, setTitle] = React.useState(selectedNote?.title || '');
+  const [title, setTitle] = useState(selectedNote?.title || '');
+  const [isEditMode, setIsEditMode] = useState(true);
 
   const editor = useEditor({
     extensions: [
@@ -111,7 +112,7 @@ function NoteEditor({ store }: NoteEditorProps) {
       ArrowInputRule,
     ],
     content: selectedNote?.content || '',
-    editable: true,
+    editable: isEditMode,
     editorProps: {
       handlePaste(view, event) {
         const items = event.clipboardData?.items;
@@ -145,7 +146,6 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   useEffect(() => {
     if (editor && selectedNote) {
-      // Try to use setContent with source: 'markdown' if supported
       try {
         editor.commands.setContent(selectedNote.content || '', { source: 'markdown' });
       } catch {
@@ -155,6 +155,13 @@ function NoteEditor({ store }: NoteEditorProps) {
     setTitle(selectedNote?.title || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNote?.id]);
+
+  // Ensure editor is editable or read-only based on isEditMode
+  useEffect(() => {
+    if (editor) {
+      editor.setEditable(isEditMode);
+    }
+  }, [editor, isEditMode]);
 
   const handleSave = async () => {
     if (selectedNote && editor) {
@@ -174,7 +181,16 @@ function NoteEditor({ store }: NoteEditorProps) {
   }
 
   return (
-    <Box p={4} display="flex" flexDirection="column" maxWidth="100%">
+    <Box p={4} display="flex" flexDirection="column" maxWidth="100%" style={{ position: 'relative' }}>
+      {/* Toggle Button */}
+      <Button
+        variant="outlined"
+        size="small"
+        style={{ position: 'absolute', top: 16, right: 16, zIndex: 2 }}
+        onClick={() => setIsEditMode((v) => !v)}
+      >
+        {isEditMode ? 'Preview' : 'Edit'}
+      </Button>
       <TextField
         label="Title"
         value={title}
@@ -184,10 +200,9 @@ function NoteEditor({ store }: NoteEditorProps) {
         margin="normal"
         placeholder="Your Note Title"
         sx={{ mb: 2 }}
-        style={{
-          fontWeight: 700
-        }}
+        style={{ fontWeight: 700 }}
         className={styles.titleClass}
+        disabled={!isEditMode}
       />
       {editor && (
         <TiptapBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
@@ -301,16 +316,26 @@ function NoteEditor({ store }: NoteEditorProps) {
           </Box>
         </TiptapBubbleMenu>
       )}
-      <EditorContent editor={editor} className={styles['tiptap-editor']} spellCheck={false} />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSave}
-        disabled={store.isLoading}
-        sx={{ alignSelf: 'flex-start' }}
-      >
-        Save
-      </Button>
+      <EditorContent
+          editor={editor}
+          className={
+            isEditMode
+              ? styles['tiptap-editor']
+              : `${styles['tiptap-editor']} ${styles['tiptap-editor-preview']}`
+          }
+          spellCheck={false}
+        />
+      {isEditMode && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSave}
+          disabled={store.isLoading}
+          sx={{ alignSelf: 'flex-start' }}
+        >
+          Save
+        </Button>
+      )}
     </Box>
   );
 }
