@@ -182,3 +182,16 @@ ol ol ol {
 }
 
 /* You can keep nesting if you want more levels */
+
+.display-none {
+  display: none !important;
+}
+
+.margin-inline-start-16 {
+  margin-inline-start: 16px;
+}
+
+.margin-bottom-16,
+h1.margin-bottom-16 {
+  margin-bottom: 16px !important;
+}

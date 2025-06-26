@@ -38,6 +38,7 @@ import { Markdown } from 'tiptap-markdown';
 import CodeBlock from '@tiptap/extension-code-block';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { Extension } from '@tiptap/core';
+import { getClasses } from '../../../../utils/class-utils';
 
 interface NoteEditorProps {
   store: NotesStore;
@@ -85,7 +86,7 @@ function NoteEditor({ store }: NoteEditorProps) {
   );
 
   const [title, setTitle] = useState(selectedNote?.title || '');
-  const [isEditMode, setIsEditMode] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -153,6 +154,7 @@ function NoteEditor({ store }: NoteEditorProps) {
       }
     }
     setTitle(selectedNote?.title || '');
+    setIsEditMode(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNote?.id]);
 
@@ -186,24 +188,26 @@ function NoteEditor({ store }: NoteEditorProps) {
       <Button
         variant="outlined"
         size="small"
-        style={{ position: 'absolute', top: 16, right: 16, zIndex: 2 }}
+        style={{ position: 'absolute', top: 16, right: 32, zIndex: 2 }}
         onClick={() => setIsEditMode((v) => !v)}
       >
         {isEditMode ? 'Preview' : 'Edit'}
       </Button>
+      <div style={{ height: 16 }} /> {/* Add gap below the button */}
       <TextField
-        label="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        placeholder="Your Note Title"
-        sx={{ mb: 2 }}
-        style={{ fontWeight: 700 }}
-        className={styles.titleClass}
-        disabled={!isEditMode}
-      />
+          label="Title"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          placeholder="Your Note Title"
+          sx={{ mb: 2 }}
+          style={{ fontWeight: 700 }}
+          className={getClasses(styles.titleClass, !isEditMode && 'display-none')}
+          disabled={!isEditMode}
+        />
+      <h1 className={getClasses("margin-bottom-16", "margin-inline-start-16", isEditMode && 'display-none')}>{title}</h1>
       {editor && (
         <TiptapBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
           <Box
@@ -325,7 +329,10 @@ function NoteEditor({ store }: NoteEditorProps) {
           }
           spellCheck={false}
         />
+
       {isEditMode && (
+        <>
+              <div style={{ height: 16 }} /> {/* Add gap below the button */}
         <Button
           variant="contained"
           color="primary"
@@ -335,6 +342,7 @@ function NoteEditor({ store }: NoteEditorProps) {
         >
           Save
         </Button>
+        </>
       )}
     </Box>
   );
