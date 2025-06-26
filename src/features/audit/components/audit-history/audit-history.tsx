@@ -82,7 +82,7 @@ function AuditHistory({ store }: AuditHistoryProps) {
                         <div key={key} style={{ marginBottom: 4 }}>
                           <Text variant="caption">"{key}": </Text>
                           <Text variant="body">
-                            was {(() => {
+                            {(() => {
                               const val = stripHtml(log.oldData?.[key]);
                               return val && val.length > 100 ? val.slice(0, 100) + '...' : val;
                             })()}
@@ -96,7 +96,7 @@ function AuditHistory({ store }: AuditHistoryProps) {
                         <div key={key} style={{ marginBottom: 4 }}>
                           <Text variant="caption">"{key}": </Text>
                           <Text variant="body">
-                            now {(() => {
+                            {(() => {
                               const val = stripHtml(log.newData?.[key]);
                               return val && val.length > 100 ? val.slice(0, 100) + '...' : val;
                             })()}
