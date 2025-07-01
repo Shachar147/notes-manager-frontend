@@ -1,0 +1,7 @@
+{
+    "name": "Enforce Code Style",
+    "description": "Checks if the selected code follows the internal code style rules from code-style-guidelines.md.",
+    "task": "Use the code-style-guidelines.md file to check if this code follows our standards. Point out violations and suggest fixes.",
+    "language": "typescript"
+}
+  

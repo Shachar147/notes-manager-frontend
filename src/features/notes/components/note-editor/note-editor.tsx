@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Box, TextField } from '@mui/material';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -39,7 +39,8 @@ import CodeBlock from '@tiptap/extension-code-block';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { Extension } from '@tiptap/core';
 import { getClasses } from '../../../../utils/class-utils';
-import CollapsiblePreview from './collapsible-preview';
+import CollapsiblePreview from '../collapsible-preview/collapsible-preview';
+import NotesEditorMenu from './notes-editor-menu/notes-editor-menu';
 
 interface NoteEditorProps {
   store: NotesStore;
@@ -88,6 +89,7 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   const [title, setTitle] = useState(selectedNote?.title || '');
   const [isEditMode, setIsEditMode] = useState(false);
+  const collapsiblePreviewRef = useRef();
 
   const editor = useEditor({
     extensions: [
@@ -185,15 +187,22 @@ function NoteEditor({ store }: NoteEditorProps) {
 
   return (
     <Box p={4} display="flex" flexDirection="column" maxWidth="100%" style={{ position: 'relative' }}>
-      {/* Toggle Button */}
-      <Button
-        variant="outlined"
-        size="small"
-        style={{ position: 'absolute', top: 16, right: 32, zIndex: 2 }}
-        onClick={() => setIsEditMode((v) => !v)}
-      >
-        {isEditMode ? 'Preview' : 'Edit'}
-      </Button>
+      {/* Toggle Button and Expand/Collapse All */}
+      <Box style={{ position: 'absolute', top: 16, right: 32, zIndex: 2, display: 'flex', gap: 8 }}>
+        {!isEditMode && (
+          <>
+            <Button variant="outlined" size="small" onClick={() => collapsiblePreviewRef.current?.expandAll?.()}>Expand All</Button>
+            <Button variant="outlined" size="small" onClick={() => collapsiblePreviewRef.current?.collapseAll?.()}>Collapse All</Button>
+          </>
+        )}
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => setIsEditMode((v) => !v)}
+        >
+          {isEditMode ? 'Preview' : 'Edit'}
+        </Button>
+      </Box>
       <div style={{ height: 16 }} /> {/* Add gap below the button */}
       <TextField
           label="Title"
@@ -210,116 +219,7 @@ function NoteEditor({ store }: NoteEditorProps) {
         />
       <h1 className={getClasses("margin-bottom-16", "margin-inline-start-16", isEditMode && 'display-none')}>{title}</h1>
       {editor && (
-        <TiptapBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-          <Box
-            display="flex"
-            gap={1}
-            alignItems="center"
-            bgcolor={theme.palette.grey[900]}
-            borderRadius={2}
-            p={1}
-            boxShadow={theme.shadows[4]}
-          >
-            <Tooltip title="H1">
-              <IconButton
-                onClick={() =>
-                  editor.chain().focus().toggleHeading({ level: 1 }).run()
-                }
-              >
-                <TitleIcon fontSize="small" />
-                <span style={{ fontSize: 10, color: '#fff' }}>H1</span>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="H2">
-              <IconButton
-                onClick={() =>
-                  editor.chain().focus().toggleHeading({ level: 2 }).run()
-                }
-              >
-                <TitleIcon fontSize="small" />
-                <span style={{ fontSize: 10, color: '#fff' }}>H2</span>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="H3">
-              <IconButton
-                onClick={() =>
-                  editor.chain().focus().toggleHeading({ level: 3 }).run()
-                }
-              >
-                <TitleIcon fontSize="small" />
-                <span style={{ fontSize: 10, color: '#fff' }}>H3</span>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Body">
-              <IconButton
-                onClick={() => editor.chain().focus().setParagraph().run()}
-              >
-                <span style={{ fontSize: 10, color: '#fff' }}>Body</span>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Divider">
-              <IconButton
-                onClick={() => editor.chain().focus().setHorizontalRule().run()}
-              >
-                <HorizontalRuleIcon
-                  fontSize="small"
-                  style={{ color: '#fff' }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Image">
-              <IconButton
-                onClick={() => {
-                  const url = window.prompt('Image URL');
-                  if (url) editor.chain().focus().setImage({ src: url }).run();
-                }}
-              >
-                <ImageIcon fontSize="small" style={{ color: '#fff' }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Code Block">
-              <IconButton
-                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-              >
-                <CodeIcon fontSize="small" style={{ color: '#fff' }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Bold">
-              <IconButton
-                onClick={() => editor.chain().focus().toggleBold().run()}
-              >
-                <FormatBoldIcon fontSize="small" style={{ color: '#fff' }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Italic">
-              <IconButton
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-              >
-                <FormatItalicIcon fontSize="small" style={{ color: '#fff' }} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Bullet List">
-              <IconButton
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
-              >
-                <FormatListBulletedIcon
-                  fontSize="small"
-                  style={{ color: '#fff' }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Numbered List">
-              <IconButton
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              >
-                <FormatListNumberedIcon
-                  fontSize="small"
-                  style={{ color: '#fff' }}
-                />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        </TiptapBubbleMenu>
+        <NotesEditorMenu editor={editor} />
       )}
       {editor && (
         isEditMode ? (
@@ -329,7 +229,7 @@ function NoteEditor({ store }: NoteEditorProps) {
             spellCheck={false}
           />
         ) : (
-          <CollapsiblePreview html={editor.getHTML()} />
+          <CollapsiblePreview ref={collapsiblePreviewRef} html={editor.getHTML()} />
         )
       )}
 
