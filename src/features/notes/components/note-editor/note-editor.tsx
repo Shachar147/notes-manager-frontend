@@ -157,8 +157,6 @@ function NoteEditor({ store }: NoteEditorProps) {
       }
     }
     setTitle(selectedNote?.title || '');
-    // store.setEditMode(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNote?.id]);
 
   // Ensure editor is editable or read-only based on isEditMode
