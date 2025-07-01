@@ -17,6 +17,7 @@ function NotesList({ store, isMobile = false }: NoteListProps) {
     await store.createNote('New Note', 'my new note content');
     if (store.notes.length > 0) {
       store.setSelectedNoteId(store.notes[store.notes.length - 1].id);
+      store.setEditMode(true);
     }
   };
 

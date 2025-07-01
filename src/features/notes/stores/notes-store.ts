@@ -15,6 +15,7 @@ export class NotesStore {
   @observable isLoading = false;
   @observable error: string | null = null;
   @observable selectedNoteId: string | null = null;
+  @observable isEditMode: boolean = false;
   auditStore: AuditStore;
 
   constructor(auditStore: AuditStore) {
@@ -129,6 +130,11 @@ export class NotesStore {
   setSelectedNoteId(selectedNoteId: string) {
     this.selectedNoteId = selectedNoteId;
     void this.auditStore.fetchEntityHistory('note', this.selectedNoteId);
+  }
+
+  @action
+  setEditMode(value: boolean) {
+    this.isEditMode = value;
   }
 
   @computed

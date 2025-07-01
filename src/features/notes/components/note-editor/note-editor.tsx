@@ -88,7 +88,7 @@ function NoteEditor({ store }: NoteEditorProps) {
   );
 
   const [title, setTitle] = useState(selectedNote?.title || '');
-  const [isEditMode, setIsEditMode] = useState(false);
+  const isEditMode = store.isEditMode;
   const collapsiblePreviewRef = useRef();
 
   const editor = useEditor({
@@ -157,7 +157,7 @@ function NoteEditor({ store }: NoteEditorProps) {
       }
     }
     setTitle(selectedNote?.title || '');
-    setIsEditMode(false);
+    // store.setEditMode(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNote?.id]);
 
@@ -198,7 +198,7 @@ function NoteEditor({ store }: NoteEditorProps) {
         <Button
           variant="outlined"
           size="small"
-          onClick={() => setIsEditMode((v) => !v)}
+          onClick={() => store.setEditMode(!store.isEditMode)}
         >
           {isEditMode ? 'Preview' : 'Edit'}
         </Button>
